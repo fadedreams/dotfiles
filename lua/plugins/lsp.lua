@@ -1,8 +1,26 @@
 return {
   -- Mason: Package manager for LSP servers, formatters, and linters
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
+      ensure_installed = {
+        "stylua",
+        "selene",
+        -- "luacheck",
+        "shellcheck",
+        "shfmt",
+        "typescript-language-server",
+        "css-lsp",
+        "html-lsp",
+        "emmet-ls",
+        "pyright",
+        "rust-analyzer",
+        "gopls",
+        "vue-language-server",
+        "lua-language-server",
+        "json-lsp",
+        "yaml-language-server",
+      },
       -- ui = {
       --   border = "rounded", -- Customize Mason UI
       --   icons = {
@@ -18,28 +36,10 @@ return {
   },
   -- Mason-LSPConfig: Bridge between mason.nvim and nvim-lspconfig
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim" },
     config = function()
       require("mason-lspconfig").setup({
-        -- ensure_installed = {
-        --   "stylua",
-        --   "selene",
-        --   -- "luacheck",
-        --   "shellcheck",
-        --   "shfmt",
-        --   "typescript-language-server",
-        --   "css-lsp",
-        --   "html-lsp",
-        --   "emmet-ls",
-        --   "pyright",
-        --   "rust-analyzer",
-        --   "gopls",
-        --   -- "vue-language-server",
-        --   -- "lua-language-server",
-        --   -- "json-lsp",
-        --   -- "yaml-language-server",
-        -- },
       })
     end,
   },

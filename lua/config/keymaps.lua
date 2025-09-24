@@ -111,7 +111,7 @@ vim.keymap.set("i", "<a-s>", "<Esc>:wa<CR>", { noremap = true })
 vim.keymap.set("n", "<a-q>", ":q<CR>", { noremap = true })
 vim.keymap.set("i", "<a-q>", "<Esc>:q<CR>", { noremap = true })
 
-vim.keymap.set("n", "<leader>sm", ":wshada!", { noremap = true , desc = "Toggle last buffer" }) --saves global marks [A-Z]
+-- vim.keymap.set("n", "<leader>sm", ":wshada!<cr>", { noremap = true , desc = "Toggle last buffer" }) --saves global marks [A-Z]
 --quit all
 -- vim.keymap.set("n", "<a-q>", ":qa<CR>", { noremap = true })
 -- vim.keymap.set("i", "<a-q>", "<Esc>:qa<CR>", { noremap = true })
@@ -277,15 +277,18 @@ end
 vim.api.nvim_set_keymap("n", "<leader>sy", ":lua search_yanked_text()<CR>", { noremap = true, silent = true,  desc = "search yanked text" })
 --paste in insert mode
 -- vim.api.nvim_set_keymap("i", "<a-o>", "<C-r>*", { noremap = true })
--- vim.api.nvim_set_keymap("i", "<a-p>", "<C-r>+", { noremap = true }) --system clipboard
 -- vim.api.nvim_set_keymap("i", "<C-A-p>", "<C-r>+<CR>", { noremap = true })
 
 -- vim.api.nvim_set_keymap("n", "gp", "_:put<CR>", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap("n", "gp", "v_p", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<s-p>", ":put!<CR>", { noremap = true, silent = true }) --paste above
 vim.api.nvim_set_keymap("n", "<leader>p", ":put<CR>", { noremap = true, silent = true }) --paste below
+vim.api.nvim_set_keymap("i", "<a-p>", "<C-r>+", { noremap = true }) --system clipboard
 -- vim.keymap.set('n', '<Leader>p', 'P', { noremap = true, silent = true })
-vim.keymap.set('n', '-p', 'P', { noremap = true, silent = true })
+-- Map Alt+p in Insert Mode to paste from the system clipboard
+-- vim.keymap.set('i', '<A-p>', '<Nop>', { noremap = true }) -- Clear any existing mapping
+-- vim.keymap.set('i', '<A-p>', '<C-r>*', { noremap = true, silent = true }) -- Set your desired mapping
+-- vim.keymap.set('n', '-p', 'P', { noremap = true, silent = true })
 
 -- vim.api.nvim_set_keymap("i", "<a-s-p>", "<C-o>:put<CR>", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap("i", "<a-c-P>", "<C-o>:put!<CR>", { noremap = true, silent = true })
@@ -293,7 +296,7 @@ vim.keymap.set('n', '-p', 'P', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "$", "g_", { noremap = true, silent = true })
 
 --new file
--- vim.keymap.set("n", "<leader>nf", ":enew<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>fn", ":enew<CR>", { noremap = true, silent = true })
 
 -- relative number
 vim.keymap.set("n", "<leader>rn", ":set relativenumber!<CR>", { noremap = true, silent = true })

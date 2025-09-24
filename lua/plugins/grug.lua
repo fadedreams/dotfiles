@@ -9,8 +9,8 @@ return {
         },
         engine = "ripgrep",
         debounceMs = 300,
+        windowCreationCommand = "botright vnew", -- Opens window on the right side
       })
-
       -- Set keybinding to open grug-far with <leader>sr
       vim.keymap.set("n", "<leader>sr", function()
         require("grug-far").open()

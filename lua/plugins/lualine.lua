@@ -44,7 +44,7 @@ return {
 
       -- Your existing section configuration
       opts.sections = {
-        -- lualine_a = {},
+        lualine_a = {},
         -- lualine_x = {},
         lualine_z = {
           {
