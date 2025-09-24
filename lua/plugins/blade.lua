@@ -1,0 +1,4 @@
+return {
+  "jwalton512/vim-blade",
+    event = "VeryLazy",  -- Optional: Lazy-load on events to improve startup time
+}

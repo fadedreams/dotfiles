@@ -184,12 +184,12 @@ return {
       })
 
       -- Configure completion for cmdline ("/" and "?")
-      cmp.setup.cmdline({ "/", "?" }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "buffer" },
-        },
-      })
+      -- cmp.setup.cmdline({ "/", "?" }, {
+      --   mapping = cmp.mapping.preset.cmdline(),
+      --   sources = {
+      --     { name = "buffer" },
+      --   },
+      -- })
 
       -- Configure completion for cmdline (":")
       cmp.setup.cmdline(":", {
