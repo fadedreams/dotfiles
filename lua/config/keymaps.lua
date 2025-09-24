@@ -1,3 +1,5 @@
+require("config.highlight")
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
@@ -48,15 +50,6 @@ vim.opt.updatetime = 50
 vim.opt.laststatus = 3
 
 --vim.opt.colorcolumn = "80"
-vim.api.nvim_set_hl(0, "CustomYank", { bg = "#7398e8" })
-vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank({
-      higroup = "CustomYank",
-      timeout = 150,
-    })
-  end,
-})
 -- vim.cmd("colorscheme tokyonight") -- should be placed in the init.lua
 
 --diff this :vsplit
@@ -84,7 +77,6 @@ vim.keymap.set("n", "<C-w><left>", "<C-w><")
 vim.keymap.set("n", "<C-w><right>", "<C-w>>")
 vim.keymap.set("n", "<C-w><up>", "<C-w>+")
 vim.keymap.set("n", "<C-w><down>", "<C-w>-")
-
 
 --default browser
 -- vim.keymap.set("n", "<F3>", ":Ex<CR>")
