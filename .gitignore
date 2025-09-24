@@ -1,0 +1,8 @@
+lazy-lock.json
+.nvim/lazy/
+
+# Swap files
+swap/
+*.swp
+*.swo
+
