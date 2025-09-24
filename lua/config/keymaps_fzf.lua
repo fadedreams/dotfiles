@@ -176,7 +176,7 @@ end, { noremap = true, silent = true, desc = "Search for Directories" })
 
 vim.keymap.set("n", "<leader>n", function()
     -- local exclude_opts = build_exclude_opts(exclude_list, "rg")
-    fzf.live_grep_glob({ rg_opts = "--hidden --no-ignore " .. combined_opts  })
+    fzf.live_grep({ rg_opts = "--hidden --no-ignore " .. combined_opts  })
 end, { noremap = true, silent = true, desc = "Live grep (exclude multiple)" })
 
 

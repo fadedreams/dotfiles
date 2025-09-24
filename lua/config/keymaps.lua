@@ -32,6 +32,7 @@ end
 -- Set undodir and enable persistent undo
 vim.opt.undodir = undo_dir
 vim.opt.undofile = true
+vim.opt.undolevels = 1000
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
