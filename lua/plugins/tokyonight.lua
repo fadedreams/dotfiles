@@ -89,6 +89,10 @@ return {
         -- colors.yellow = "#787000"
       end,
       on_highlights = function(highlights, colors)
+        -- highlights["@function.body"] = { bg = colors.bg_dark, fg = colors.fg }  -- Adjust colors as needed
+        -- Or for language-specific (e.g., Lua local functions)
+        -- highlights["@function.inner"] = { bg = colors.bg_dark, fg = colors.fg }
+
         highlights.StatusLine = { fg = "#ffffff", bg = "#000000", bold = true } -- Customize this to your preferred fg/bg
         highlights.StatusLineNC = { fg = "#ffffff", bg = "#444444" } -- Customize this to your preferred fg/bg for inactive statusline
 
