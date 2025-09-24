@@ -1,39 +1,39 @@
 return {
     "inhesrom/remote-ssh.nvim",
-    branch = "master",
-    -- dependencies = {
-    --     "ibhagwan/fzf-lua", -- Replace telescope with fzf-lua
-    --     "nvim-lua/plenary.nvim", -- Still needed for remote-ssh.nvim
-    --     -- Optional: nvim-notify for notifications
-    --     "rcarriga/nvim-notify",
-    -- },
+    branch = "master", -- Consider pinning to a specific tag or commit if issues persist
+    dependencies = {
+        "ibhagwan/fzf-lua", -- File searching
+        "nvim-lua/plenary.nvim", -- Required for remote-ssh.nvim
+        "rcarriga/nvim-notify", -- Optional for better notifications
+    },
     config = function()
         -- Set up fzf-lua
         require('fzf-lua').setup({
-            -- Basic fzf-lua configuration
             winopts = {
-                preview = { default = 'bat' }, -- Use bat for previews (optional)
+                preview = { default = 'bat' }, -- Use bat for previews
             },
             files = {
-                -- Configure fzf-lua to work with remote files if needed
-                cmd = 'find . -type f', -- Example: Customize for remote file search
+                cmd = 'find . -type f', -- Customize for remote file search
             },
             keymap = {
-                -- Example keybindings for fzf-lua
                 fzf = {
-                    -- ["<leader>ff"] = "file", -- Find files
-                    -- ["<leader>rb"] = "buffers", -- Find buffers
-                    -- ["<leader>ro"] = "oldfiles", -- Recent files
+                    ["<leader>ff"] = "files", -- Find files
+                    ["<leader>rb"] = "buffers", -- Find buffers
+                    ["<leader>ro"] = "oldfiles", -- Recent files
                 },
             },
         })
 
-        -- Set up remote-ssh.nvim without LSP or telescope
+        -- Set up remote-ssh.nvim
         require('remote-ssh').setup({
-            -- Minimal configuration for plain text editing
+            -- Add configuration options if needed, e.g., SSH connection settings
+            ssh_config = {
+                -- Example: Specify SSH key if needed
+                -- identity_file = "~/.ssh/id_rsa",
+            },
         })
 
-        -- Key mapping for <leader>rf to open a prompt with predefined rsync URL for RemoteOpen
+        -- Key mapping for <leader>rf (RemoteOpen)
         vim.api.nvim_set_keymap(
             "n",
             "<leader>rf",
@@ -54,7 +54,7 @@ return {
             }
         )
 
-        -- Key mapping for <leader>rd to open a prompt with predefined rsync URL for RemoteTreeBrowser
+        -- Key mapping for <leader>rd (RemoteTreeBrowser)
         vim.api.nvim_set_keymap(
             "n",
             "<leader>rd",
@@ -65,7 +65,7 @@ return {
                 callback = function()
                     vim.ui.input({
                         prompt = "Remote directory: ",
-                        default = "RemoteTreeBrowserrsync://root@109.248.161.147//root/",
+                        default = ":RemoteTreeBrowser rsync://root@109.248.161.147//root/",
                     }, function(input)
                         if input then
                             vim.cmd(input)
@@ -74,5 +74,5 @@ return {
                 end,
             }
         )
-    end
+    end,
 }
