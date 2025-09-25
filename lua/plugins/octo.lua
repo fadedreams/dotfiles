@@ -4,17 +4,20 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope.nvim",
-			-- Optionally: "ibhagwan/fzf-lua" or "folke/snacks.nvim" (uncomment one if preferred)
-			-- "ibhagwan/fzf-lua",
-			-- "folke/snacks.nvim",
 			"nvim-tree/nvim-web-devicons",
 		},
-		cmd = { "Octo" }, -- Lazy-load on :Octo command
-		event = { "BufReadPost */issues/*", "BufReadPost */pull/*" }, -- Lazy-load on GitHub-related buffers
+		cmd = { "Octo" },
+		event = { "BufReadPost */issues/*", "BufReadPost */pull/*" },
+		keys = {
+			{ "<leader>gi", "<cmd>Octo issue list<cr>", desc = "List GitHub Issues" },
+			{ "<leader>gp", "<cmd>Octo pr list<cr>", desc = "List GitHub PRs" },
+			{ "<leader>gc", "<cmd>Octo issue create<cr>", desc = "Create GitHub Issue" },
+		},
 		opts = function()
 			return {
-				-- Basic setup; add custom options here if needed
-				-- Example: ssh_aliases = { ["git@github.com"] = "github.com" }
+				default_repo = "yourusername/your-repo", -- Set your default repo here
+				-- Optional: Add SSH aliases if using SSH remotes
+				ssh_aliases = { ["git@github.com"] = "github.com" },
 			}
 		end,
 		config = function(_, opts)
