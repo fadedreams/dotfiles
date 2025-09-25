@@ -59,10 +59,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Swap lines
-vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { noremap = true, silent = true })
-vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { noremap = true, silent = true })
-vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
-vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("n", "<c-a-j>", ":m .+1<CR>==", { noremap = true, silent = true })
+vim.keymap.set("n", "<c-a-k>", ":m .-2<CR>==", { noremap = true, silent = true })
+vim.keymap.set("v", "<c-a-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("v", "<c-a-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 
 -- vim.cmd("colorscheme tokyonight") -- should be placed in the init.lua
 
