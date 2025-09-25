@@ -320,8 +320,10 @@ vim.api.nvim_set_keymap("i", "<a-p>", "<c-r>+", { noremap = true }) --system cli
 -- vim.api.nvim_set_keymap("i", "<a-s-p>", "<C-o>:put!<CR>", { noremap = true, silent = true }) --paste above
 -- vim.api.nvim_set_keymap("i", "<c-s-p>", "<C-o>:put<CR>", { noremap = true, silent = true }) -- paste below
 
--- vim.api.nvim_set_keymap("i", "<a-s-p>", "<C-o>:put<CR>", { noremap = true, silent = true })
--- vim.api.nvim_set_keymap("i", "<a-c-P>", "<C-o>:put!<CR>", { noremap = true, silent = true })
+--chars
+vim.keymap.set("i", "<a-x>", "<Del>", { noremap = true, silent = true })
+vim.keymap.set("i", "<c-c>", "<Right>", { noremap = true, silent = true })
+vim.keymap.set("i", "<a-z>", "<Left>", { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap("v", "$", "g_", { noremap = true, silent = true })
 

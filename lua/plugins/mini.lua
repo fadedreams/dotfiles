@@ -45,16 +45,13 @@ return {
 			})
 		end,
 	},
+	-- ga , or gA ,
 	{
 		"nvim-mini/mini.align",
 		version = false, -- Use main branch (latest development version)
 		config = function()
 			require("mini.align").setup()
 		end,
-	},
-	{
-		"tpope/vim-surround",
-		event = "VeryLazy", -- Optional: Lazy-load on events to improve startup time
 	},
 	{
 		"echasnovski/mini.indentscope",
