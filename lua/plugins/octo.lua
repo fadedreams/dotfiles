@@ -22,11 +22,7 @@ return {
 			{ "<leader>gb", "<cmd>Octo issue browser<cr>", desc = "Open Issue/PR in Browser" },
 		},
 		opts = function()
-			return {
-				default_repo = "yourusername/your-repo", -- Set your default repo here
-				-- Optional: Add SSH aliases if using SSH remotes
-				ssh_aliases = { ["git@github.com"] = "github.com" },
-			}
+			return {}
 		end,
 		config = function(_, opts)
 			require("octo").setup(opts)
