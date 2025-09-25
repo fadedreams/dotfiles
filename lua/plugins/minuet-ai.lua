@@ -36,7 +36,8 @@ return {
 					end
 				end,
 				end_point = "https://openrouter.ai/api/v1/chat/completions",
-				model = "meta-llama/llama-4-maverick",
+				model = "moonshotai/kimi-k2",
+				-- model = "meta-llama/llama-4-maverick",
 				-- model = "meta-llama/llama-3.1-8b-instruct",  -- Previous fallback
 				name = "Openrouter",
 				stream = true,

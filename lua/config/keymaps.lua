@@ -26,8 +26,8 @@ vim.opt.backup = false
 -- Define the undo directory path
 local undo_dir = os.getenv("HOME") .. "/.vim/undodir"
 -- Check if directory exists; if not, create it
-if vim.fn.isdirectory(undo_dir) == 0 then  -- Returns 0 if dir doesn't exist
-  vim.fn.mkdir(undo_dir, "p")  -- "p" flag creates parent dirs if needed
+if vim.fn.isdirectory(undo_dir) == 0 then -- Returns 0 if dir doesn't exist
+	vim.fn.mkdir(undo_dir, "p") -- "p" flag creates parent dirs if needed
 end
 -- Set undodir and enable persistent undo
 vim.opt.undodir = undo_dir
@@ -36,7 +36,6 @@ vim.opt.undolevels = 1000
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
-
 
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
@@ -51,20 +50,19 @@ vim.opt.laststatus = 3
 vim.opt.termguicolors = true
 vim.api.nvim_set_hl(0, "CustomYank", { bg = "#7398e8" })
 vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank({
-      higroup = "CustomYank",
-      timeout = 150,
-    })
-  end,
+	callback = function()
+		vim.highlight.on_yank({
+			higroup = "CustomYank",
+			timeout = 150,
+		})
+	end,
 })
 
-
 -- Swap lines
-vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { noremap = true, silent = true })
-vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { noremap = true, silent = true })
-vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
-vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { noremap = true, silent = true })
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { noremap = true, silent = true })
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 
 -- vim.cmd("colorscheme tokyonight") -- should be placed in the init.lua
 
@@ -72,7 +70,7 @@ vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true
 -- vim.keymap.set("n", "<Leader>df", ":windo diffthis<CR>", { noremap = true, silent = true })
 
 -- vim.cmd([[set grepprg=fd\ --type=file\ --color=never]])
-vim.keymap.set('n', 'x', '"_x', { noremap = true }) -- delete without yanking
+vim.keymap.set("n", "x", '"_x', { noremap = true }) -- delete without yanking
 
 -- opens a new line below the current line, deletes the leading whitespace
 -- vim.keymap.set("n", "<Leader>o", "o<Esc>^Da", { noremap = true, silent = true })
@@ -80,20 +78,24 @@ vim.keymap.set('n', 'x', '"_x', { noremap = true }) -- delete without yanking
 
 -- The automatic insertion of comment leaders is disabled for all file types
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "*",
-  callback = function()
-    vim.opt_local.formatoptions:remove("o")
-  end,
+	pattern = "*",
+	callback = function()
+		vim.opt_local.formatoptions:remove("o")
+	end,
 })
 
 -- windows
-vim.keymap.set("n", "<Leader>go", ":silent !xdg-open %:p:h<CR>", { noremap = true, silent = true, desc = "Open file explorer" })
+vim.keymap.set(
+	"n",
+	"<Leader>go",
+	":silent !xdg-open %:p:h<CR>",
+	{ noremap = true, silent = true, desc = "Open file explorer" }
+)
 vim.keymap.set("n", "<F11>", ":only<CR>", { noremap = true, silent = true, desc = "Maximize window" })
 vim.keymap.set("n", "<C-w><left>", "<C-w><")
 vim.keymap.set("n", "<C-w><right>", "<C-w>>")
 vim.keymap.set("n", "<C-w><up>", "<C-w>+")
 vim.keymap.set("n", "<C-w><down>", "<C-w>-")
-
 
 --default browser
 -- vim.keymap.set("n", "<F3>", ":Ex<CR>")
@@ -118,8 +120,8 @@ vim.keymap.set("i", "<a-q>", "<Esc>:q<CR>", { noremap = true })
 
 --delete buffer
 vim.keymap.set("n", "<Leader>bb", "<C-^>", { noremap = true, silent = true, desc = "Toggle last buffer" })
-vim.keymap.set("n", "<leader>bo", ":%bd|e#|bd#<CR>", { noremap = true, silent = true, desc = "delete other buffers"  })
-vim.keymap.set("n", "<leader>ba", ":%bd<CR>", { noremap = true, silent = true, desc = "delete all buffers"  })
+vim.keymap.set("n", "<leader>bo", ":%bd|e#|bd#<CR>", { noremap = true, silent = true, desc = "delete other buffers" })
+vim.keymap.set("n", "<leader>ba", ":%bd<CR>", { noremap = true, silent = true, desc = "delete all buffers" })
 vim.keymap.set("n", "<c-h>", ":bdelete<CR>")
 vim.keymap.set("n", "<c-k>", ":bnext<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<c-j>", ":bprevious<CR>", { noremap = true, silent = true })
@@ -139,24 +141,24 @@ vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { noremap = true, silent = true
 
 -- Save current session to ./session.vim
 vim.keymap.set("n", "<leader>ss", ":mksession! ./session.vim<CR>", {
-  noremap = true,
-  silent = true,
-  desc = "Save session to file"  -- Shows in which-key
+	noremap = true,
+	silent = true,
+	desc = "Save session to file", -- Shows in which-key
 })
 -- Load session from the current working directory
 vim.keymap.set("n", "<leader>ls", ":source ./session.vim<CR>", { noremap = true, silent = true })
 -- delete swap files
 local function delete_swap_files()
-  local cmd = "rm -rf ~/.local/state/nvim/swap/*"
-  vim.fn.system(cmd)
-  print("Swap files deleted.")
+	local cmd = "rm -rf ~/.local/state/nvim/swap/*"
+	vim.fn.system(cmd)
+	print("Swap files deleted.")
 end
 -- Map leader + ds to delete swap files function
 -- Uses normal mode (n), is non-recursive (noremap), and silent
 vim.keymap.set("n", "<leader>ds", delete_swap_files, {
-  noremap = true,
-  silent = true,
-  desc = "Delete all swap files"  -- Description for which-key
+	noremap = true,
+	silent = true,
+	desc = "Delete all swap files", -- Description for which-key
 })
 
 -- function search_under_cursor()
@@ -169,121 +171,152 @@ vim.keymap.set("n", "<leader>ds", delete_swap_files, {
 
 --leader search
 function search_under_cursor()
-  -- local word = vim.fn.expand("<cword>")
-  -- local pattern = "([%w%.%-%:\\,\\\\_:?;%!@#%$%^&*+]+)"
-  local pattern = "([%w_-]+)"
-  local line = vim.fn.getline(".")
-  local cursor_col = vim.fn.col(".")
+	-- local word = vim.fn.expand("<cword>")
+	-- local pattern = "([%w%.%-%:\\,\\\\_:?;%!@#%$%^&*+]+)"
+	local pattern = "([%w_-]+)"
+	local line = vim.fn.getline(".")
+	local cursor_col = vim.fn.col(".")
 
-  local match = line:match(pattern, cursor_col)
+	local match = line:match(pattern, cursor_col)
 
-  if match then
-    vim.api.nvim_command('let @/ = "\\V' .. match .. '\\V"')
-    vim.api.nvim_command("/\\V\\<" .. vim.fn.escape(match, "\\") .. "\\>")
-  end
+	if match then
+		vim.api.nvim_command('let @/ = "\\V' .. match .. '\\V"')
+		vim.api.nvim_command("/\\V\\<" .. vim.fn.escape(match, "\\") .. "\\>")
+	end
 end
 
 function search_under_cursor_simple()
-  -- local word = vim.fn.expand("<cword>")
-  -- local pattern = "([%w%.%-%:\\,\\\\_:?;%!@#%$%^&*+]+)"
+	-- local word = vim.fn.expand("<cword>")
+	-- local pattern = "([%w%.%-%:\\,\\\\_:?;%!@#%$%^&*+]+)"
 
-  local word = vim.fn.expand("<cword>")
-  local line = vim.fn.getline(".")
-  local cursor_col = vim.fn.col(".")
-  local match = line:match(word, cursor_col)
+	local word = vim.fn.expand("<cword>")
+	local line = vim.fn.getline(".")
+	local cursor_col = vim.fn.col(".")
+	local match = line:match(word, cursor_col)
 
-  if match then
-    vim.api.nvim_command('let @/ = "\\V' .. match .. '\\V"')
-    vim.api.nvim_command("/\\V\\<" .. vim.fn.escape(match, "\\") .. "\\>")
-  end
+	if match then
+		vim.api.nvim_command('let @/ = "\\V' .. match .. '\\V"')
+		vim.api.nvim_command("/\\V\\<" .. vim.fn.escape(match, "\\") .. "\\>")
+	end
 end
 
 local function get_visual_selection()
-  return table.concat(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos(".")), "\n")
+	return table.concat(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos(".")), "\n")
 end
 
 -- Map the function to the leader + / key
 -- vim.api.nvim_set_keymap("n", "<leader>jj", ":lua search_under_cursor()<CR>", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap("n", "<leader>kk", ":lua search_under_cursor_simple()<CR>", { noremap = true, silent = true })
 function search_under_visual()
-  -- Get the visual selection as a search term
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
-  local lines = vim.fn.getline(start_pos[2], end_pos[2])
-  local word = table.concat(lines, "\n"):sub(start_pos[3], end_pos[3] - 1 + (#lines > 1 and 1 or 0))
+	-- Get the visual selection as a search term
+	local start_pos = vim.fn.getpos("'<")
+	local end_pos = vim.fn.getpos("'>")
+	local lines = vim.fn.getline(start_pos[2], end_pos[2])
+	local word = table.concat(lines, "\n"):sub(start_pos[3], end_pos[3] - 1 + (#lines > 1 and 1 or 0))
 
-  -- Escape special characters for Vim's search pattern
-  local escaped_word = vim.fn.escape(word, "\\/.*$^~[]")
+	-- Escape special characters for Vim's search pattern
+	local escaped_word = vim.fn.escape(word, "\\/.*$^~[]")
 
-  -- Start the search in the current file with the escaped word
-  vim.api.nvim_command('let @/ = "\\V' .. escaped_word .. '"')
-  vim.api.nvim_command("/\\V" .. escaped_word)
+	-- Start the search in the current file with the escaped word
+	vim.api.nvim_command('let @/ = "\\V' .. escaped_word .. '"')
+	vim.api.nvim_command("/\\V" .. escaped_word)
 end
 
 vim.api.nvim_set_keymap("v", "<C-f>", ":lua search_under_visual()<CR>", { noremap = true, silent = true })
 
 -- Function to search word under cursor in the current file using a custom pattern
 function search_text_under_cursor()
-  -- Get the current line and cursor position
-  local line = vim.fn.getline(".")
-  local col = vim.fn.col(".")
-  
-  -- Define the pattern to match words (including spaces and specified characters)
-  local pattern = "([%w%.%-%:\\,\\\\_-:?;%%!@#%$%^&*+%s]+)"
-  
-  -- Find the start and end positions of the word under the cursor
-  local start_col, end_col, word = line:find(pattern, col - 1)
-  
-  -- Check if a word was found and the cursor is within its bounds
-  if not word or col < start_col or col > end_col then
-    vim.notify("No valid word under cursor", vim.log.levels.WARN)
-    return
-  end
-  
-  -- Escape special characters for Vim's search pattern
-  local escaped_word = vim.fn.escape(word, "\\/.*$^~[]")
-  
-  -- Set the search register and start the search
-  vim.api.nvim_command('let @/ = "\\V' .. escaped_word .. '"')
-  vim.api.nvim_command("/\\V" .. escaped_word)
+	-- Get the current line and cursor position
+	local line = vim.fn.getline(".")
+	local col = vim.fn.col(".")
+
+	-- Define the pattern to match words (including spaces and specified characters)
+	local pattern = "([%w%.%-%:\\,\\\\_-:?;%%!@#%$%^&*+%s]+)"
+
+	-- Find the start and end positions of the word under the cursor
+	local start_col, end_col, word = line:find(pattern, col - 1)
+
+	-- Check if a word was found and the cursor is within its bounds
+	if not word or col < start_col or col > end_col then
+		vim.notify("No valid word under cursor", vim.log.levels.WARN)
+		return
+	end
+
+	-- Escape special characters for Vim's search pattern
+	local escaped_word = vim.fn.escape(word, "\\/.*$^~[]")
+
+	-- Set the search register and start the search
+	vim.api.nvim_command('let @/ = "\\V' .. escaped_word .. '"')
+	vim.api.nvim_command("/\\V" .. escaped_word)
 end
 
 -- Keymap to trigger the search
 vim.keymap.set(
-  "n",
-  "<C-f>",
-  ":lua search_text_under_cursor()<CR>",
-  { noremap = true, silent = true, desc = "Search text under cursor in current file" }
+	"n",
+	"<C-f>",
+	":lua search_text_under_cursor()<CR>",
+	{ noremap = true, silent = true, desc = "Search text under cursor in current file" }
 )
 
 --- Searches for text under the cursor in a simple manner.
 -- @return nil
-function search_yanked_text()
-  -- Get the yanked text from the default register
-  local yanked_text = vim.fn.getreg('"')
+-- function search_yanked_text()
+-- 	-- Get the yanked text from the default register
+-- 	local yanked_text = vim.fn.getreg('"')
+--
+-- 	-- Escape the yanked text for exact match and case insensitivity
+-- 	local escaped_text = vim.fn.escape(yanked_text, "\\")
+--
+-- 	-- Construct a pattern that matches the exact yanked text
+-- 	local pattern = "\\V" .. escaped_text
+--
+-- 	-- Set the search register and perform the search
+-- 	vim.api.nvim_command('let @/ = "' .. pattern .. '"')
+-- 	vim.api.nvim_command("/" .. pattern)
+-- end
+--
+-- -- Map the function to the leader + y key
+-- vim.api.nvim_set_keymap(
+-- 	"n",
+-- 	"<leader>sy",
+-- 	":lua search_yanked_text()<CR>",
+-- 	{ noremap = true, silent = true, desc = "search yanked text" }
+-- )
 
-  -- Escape the yanked text for exact match and case insensitivity
-  local escaped_text = vim.fn.escape(yanked_text, "\\")
+function search_clipboard_text()
+	-- Get the system clipboard content
+	local clipboard_text = vim.fn.getreg("+")
 
-  -- Construct a pattern that matches the exact yanked text
-  local pattern = "\\V" .. escaped_text
+	-- Escape the clipboard text for exact match and case insensitivity
+	local escaped_text = vim.fn.escape(clipboard_text, "\\")
 
-  -- Set the search register and perform the search
-  vim.api.nvim_command('let @/ = "' .. pattern .. '"')
-  vim.api.nvim_command("/" .. pattern)
+	-- Construct a pattern that matches the exact clipboard text
+	local pattern = "\\V" .. escaped_text
+
+	-- Set the search register and perform the search
+	vim.api.nvim_command('let @/ = "' .. pattern .. '"')
+	vim.api.nvim_command("/" .. pattern)
 end
 
--- Map the function to the leader + y key
-vim.api.nvim_set_keymap("n", "<leader>sy", ":lua search_yanked_text()<CR>", { noremap = true, silent = true,  desc = "search yanked text" })
+-- Map the function to <leader>sc (sc for search clipboard)
+vim.keymap.set(
+	"n",
+	"<leader>sy",
+	":lua search_clipboard_text()<CR>",
+	{ noremap = true, silent = true, desc = "Search system clipboard text" }
+)
+
 --paste in insert mode
 -- vim.api.nvim_set_keymap("i", "<a-o>", "<C-r>*", { noremap = true })
 -- vim.api.nvim_set_keymap("i", "<C-A-p>", "<C-r>+<CR>", { noremap = true })
 
 -- vim.api.nvim_set_keymap("n", "gp", "_:put<CR>", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap("n", "gp", "v_p", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<s-p>", ":put!<CR>", { noremap = true, silent = true }) --paste above
+
+vim.api.nvim_set_keymap("n", "<a-p>", ":put!<CR>", { noremap = true, silent = true }) --paste above
 vim.api.nvim_set_keymap("n", "<leader>p", ":put<CR>", { noremap = true, silent = true }) --paste below
 vim.api.nvim_set_keymap("i", "<a-p>", "<C-r>+", { noremap = true }) --system clipboard
+
 -- vim.keymap.set('n', '<Leader>p', 'P', { noremap = true, silent = true })
 -- Map Alt+p in Insert Mode to paste from the system clipboard
 -- vim.keymap.set('i', '<A-p>', '<Nop>', { noremap = true }) -- Clear any existing mapping
@@ -305,7 +338,6 @@ vim.keymap.set("n", "<leader>rn", ":set relativenumber!<CR>", { noremap = true, 
 -- vim.keymap.set("n", "<leader>qf", ":copen<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<leader>]n", ":cnext<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<leader>[p", ":cprev<CR>", { noremap = true, silent = true })
-
 
 -- greatest remap ever
 vim.keymap.set("x", "p", "pgvy")
@@ -390,51 +422,51 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- Search and replace the word under cursor in whole buffer
 vim.keymap.set("n", "<leader>rs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {
-  desc = "Replace word under cursor",  -- Description for which-key
-  noremap = true,
-  silent = true
+	desc = "Replace word under cursor", -- Description for which-key
+	noremap = true,
+	silent = true,
 })
 
 -- visual_search_replace
 function visual_search_replace()
-  -- Save the start and end positions of the visual selection
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
+	-- Save the start and end positions of the visual selection
+	local start_pos = vim.fn.getpos("'<")
+	local end_pos = vim.fn.getpos("'>")
 
-  -- Get the lines and columns of the selection
-  local start_line = start_pos[2]
-  local end_line = end_pos[2]
-  local start_col = start_pos[3]
-  local end_col = end_pos[3]
+	-- Get the lines and columns of the selection
+	local start_line = start_pos[2]
+	local end_line = end_pos[2]
+	local start_col = start_pos[3]
+	local end_col = end_pos[3]
 
-  -- Get the text from the selected lines
-  local lines = vim.fn.getline(start_line, end_line)
+	-- Get the text from the selected lines
+	local lines = vim.fn.getline(start_line, end_line)
 
-  -- Adjust the end column if the selection spans multiple lines
-  if #lines > 1 then
-    end_col = #lines[#lines]
-  end
+	-- Adjust the end column if the selection spans multiple lines
+	if #lines > 1 then
+		end_col = #lines[#lines]
+	end
 
-  -- Extract the selected text
-  local selected_text
-  if #lines == 1 then
-    selected_text = lines[1]:sub(start_col, end_col)
-  else
-    selected_text = lines[1]:sub(start_col)
-    for i = 2, #lines - 1 do
-      selected_text = selected_text .. "\n" .. lines[i]
-    end
-    selected_text = selected_text .. "\n" .. lines[#lines]:sub(1, end_col)
-  end
+	-- Extract the selected text
+	local selected_text
+	if #lines == 1 then
+		selected_text = lines[1]:sub(start_col, end_col)
+	else
+		selected_text = lines[1]:sub(start_col)
+		for i = 2, #lines - 1 do
+			selected_text = selected_text .. "\n" .. lines[i]
+		end
+		selected_text = selected_text .. "\n" .. lines[#lines]:sub(1, end_col)
+	end
 
-  -- Escape special characters for Vim's search pattern
-  local escaped_text = vim.fn.escape(selected_text, "\\/.*$^~[]")
+	-- Escape special characters for Vim's search pattern
+	local escaped_text = vim.fn.escape(selected_text, "\\/.*$^~[]")
 
-  -- Prompt for the replacement text
-  local replace_text = vim.fn.input("Replace with: ")
+	-- Prompt for the replacement text
+	local replace_text = vim.fn.input("Replace with: ")
 
-  -- Perform the replacement
-  vim.cmd("%s/\\V" .. escaped_text .. "/" .. replace_text .. "/gc")
+	-- Perform the replacement
+	vim.cmd("%s/\\V" .. escaped_text .. "/" .. replace_text .. "/gc")
 end
 
 -- Map the function to a keybinding in visual mode
@@ -442,42 +474,42 @@ vim.api.nvim_set_keymap("v", "<leader>rr", ":lua visual_search_replace()<CR>", {
 
 -- visual_search
 function visual_search()
-  -- Save the start and end positions of the visual selection
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
+	-- Save the start and end positions of the visual selection
+	local start_pos = vim.fn.getpos("'<")
+	local end_pos = vim.fn.getpos("'>")
 
-  -- Get the lines and columns of the selection
-  local start_line = start_pos[2]
-  local end_line = end_pos[2]
-  local start_col = start_pos[3]
-  local end_col = end_pos[3]
+	-- Get the lines and columns of the selection
+	local start_line = start_pos[2]
+	local end_line = end_pos[2]
+	local start_col = start_pos[3]
+	local end_col = end_pos[3]
 
-  -- Get the text from the selected lines
-  local lines = vim.fn.getline(start_line, end_line)
+	-- Get the text from the selected lines
+	local lines = vim.fn.getline(start_line, end_line)
 
-  -- Adjust the end column if the selection spans multiple lines
-  if #lines > 1 then
-    end_col = #lines[#lines]
-  end
+	-- Adjust the end column if the selection spans multiple lines
+	if #lines > 1 then
+		end_col = #lines[#lines]
+	end
 
-  -- Extract the selected text
-  local selected_text
-  if #lines == 1 then
-    selected_text = lines[1]:sub(start_col, end_col)
-  else
-    selected_text = lines[1]:sub(start_col)
-    for i = 2, #lines - 1 do
-      selected_text = selected_text .. "\n" .. lines[i]
-    end
-    selected_text = selected_text .. "\n" .. lines[#lines]:sub(1, end_col)
-  end
+	-- Extract the selected text
+	local selected_text
+	if #lines == 1 then
+		selected_text = lines[1]:sub(start_col, end_col)
+	else
+		selected_text = lines[1]:sub(start_col)
+		for i = 2, #lines - 1 do
+			selected_text = selected_text .. "\n" .. lines[i]
+		end
+		selected_text = selected_text .. "\n" .. lines[#lines]:sub(1, end_col)
+	end
 
-  -- Escape special characters for Vim's search pattern
-  local escaped_text = vim.fn.escape(selected_text, "\\/.*$^~[]")
+	-- Escape special characters for Vim's search pattern
+	local escaped_text = vim.fn.escape(selected_text, "\\/.*$^~[]")
 
-  -- Search for the text (using very nomagic mode \V)
-  vim.cmd("let @/ = '\\V" .. escaped_text .. "'")
-  vim.cmd("set hlsearch")
+	-- Search for the text (using very nomagic mode \V)
+	vim.cmd("let @/ = '\\V" .. escaped_text .. "'")
+	vim.cmd("set hlsearch")
 end
 
 -- Map the function to <leader>/ in visual mode
@@ -505,38 +537,48 @@ vim.keymap.set("x", "D", '"_d', { desc = "delete forever" })
 
 -- Yank the current file path to the system clipboard
 function yank_file_path()
-  local file_path = vim.fn.expand("%:p")
-  vim.fn.setreg("+", file_path)
-  vim.fn.setreg("*", file_path)
-  print("File path copied to clipboard: " .. file_path)
+	local file_path = vim.fn.expand("%:p")
+	vim.fn.setreg("+", file_path)
+	vim.fn.setreg("*", file_path)
+	print("File path copied to clipboard: " .. file_path)
 end
 
 -- Map the function to a key combination (e.g., <Leader>y in normal mode)
-vim.keymap.set("n", "<Leader>yf", ":lua yank_file_path()<CR>", { noremap = true, silent = true, desc= "yank path" })
+vim.keymap.set("n", "<Leader>yf", ":lua yank_file_path()<CR>", { noremap = true, silent = true, desc = "yank path" })
 
 -- Yank the directory path of the current file to the system clipboard
 function yank_directory_path()
-  local file_path = vim.fn.expand("%:p:h")
-  vim.fn.setreg("+", file_path)
-  vim.fn.setreg("*", file_path)
-  print("Directory path copied to clipboard: " .. file_path)
+	local file_path = vim.fn.expand("%:p:h")
+	vim.fn.setreg("+", file_path)
+	vim.fn.setreg("*", file_path)
+	print("Directory path copied to clipboard: " .. file_path)
 end
 
 -- Map the function to a key combination (e.g., <Leader>yd in normal mode)
-vim.api.nvim_set_keymap("n", "<Leader>yd", ":lua yank_directory_path()<CR>", { noremap = true, silent = true, desc="yank dir" })
+vim.api.nvim_set_keymap(
+	"n",
+	"<Leader>yd",
+	":lua yank_directory_path()<CR>",
+	{ noremap = true, silent = true, desc = "yank dir" }
+)
 
 --- Yanks the relative file path of the current buffer to the clipboard.
 -- Retrieves the relative path of the current file and copies it to both the '+' (system)
 -- and '*' (primary) clipboard registers. Prints a confirmation message with the path.
 -- @return nil
 function yank_relative_file_path()
-  local relative_path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
-  vim.fn.setreg("+", relative_path)
-  vim.fn.setreg("*", relative_path)
-  print("Relative file path copied to clipboard: " .. relative_path)
+	local relative_path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
+	vim.fn.setreg("+", relative_path)
+	vim.fn.setreg("*", relative_path)
+	print("Relative file path copied to clipboard: " .. relative_path)
 end
 
-vim.keymap.set("n", "<Leader>yy", ":lua yank_relative_file_path()<CR>", { noremap = true, silent = true, desc="yank this" })
+vim.keymap.set(
+	"n",
+	"<Leader>yy",
+	":lua yank_relative_file_path()<CR>",
+	{ noremap = true, silent = true, desc = "yank this" }
+)
 
 --- Yanks the relative file path and entire content of the current buffer to the clipboard.
 -- Retrieves the relative path of the current file and its full content, combines them with
@@ -544,95 +586,158 @@ vim.keymap.set("n", "<Leader>yy", ":lua yank_relative_file_path()<CR>", { norema
 -- registers. Prints a confirmation message with the file path.
 -- @return nil
 local function yank_relative_file_path_and_all()
-  local relative_path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
-  if relative_path == "" then
-    print("Error: No file associated with the current buffer")
-    return
-  end
-  local file_content = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
-  local combined = relative_path .. ":    " .. file_content
-  vim.fn.setreg("+", combined)
-  vim.fn.setreg("*", combined)
-  print("Copied to clipboard: " .. relative_path)
+	local relative_path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
+	if relative_path == "" then
+		print("Error: No file associated with the current buffer")
+		return
+	end
+	local file_content = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+	local combined = relative_path .. ":    " .. file_content
+	vim.fn.setreg("+", combined)
+	vim.fn.setreg("*", combined)
+	print("Copied to clipboard: " .. relative_path)
 end
 
 -- Use a Lua function call directly in the key mapping
 vim.keymap.set("n", "<Leader>yu", function()
-  yank_relative_file_path_and_all()
+	yank_relative_file_path_and_all()
 end, { noremap = true, silent = false, desc = "Yank relative path and file content" })
 
 -- yank all
-vim.keymap.set("n", "<Leader>ya", ":cd $PWD<CR>:!/home/m/.config/nvim/file_dir_to_txt_exclude.sh && xclip -selection clipboard all.txt<CR>", { noremap = true, silent = false, desc = "yank all" })
+vim.keymap.set(
+	"n",
+	"<Leader>ya",
+	":cd $PWD<CR>:!/home/m/.config/nvim/file_dir_to_txt_exclude.sh && xclip -selection clipboard all.txt<CR>",
+	{ noremap = true, silent = false, desc = "yank all" }
+)
 -- vim.keymap.set("n", "<Leader>ya", ":cd %:p:h<CR>:!/home/m/.config/nvim/file_dir_to_txt_exclude.sh && xclip -selection clipboard all.txt<CR>", { noremap = true, silent = false, desc = "yank all" })
 -- yank all input exclusions
 function YankWithCustomExclusions()
-  -- Default directories to exclude (always included)
-  local default_exclude_dirs = {
-    "node_modules", "target", ".git", "resources", ".idea", ".vscode",
-    "__pycache__", "venv", ".venv", ".mypy_cache", ".pytest_cache",
-    "build", "dist", "out", "docs", "env"
-  }
-  -- Default files to exclude (always included)
-  local default_exclude_files = {
-    "file_dir_to_txt_exclude.sh", "file_dir_to_txt_exclude2.sh", ".gitignore",
-    "serverall.js", ".env", "all.txt", "tree.txt", "go.sum", "package-lock.json", "yarn.lock",
-    ".next", ".env.local", ".env.development.local", ".env.production.local",
-    ".env.test.local", ".env.development", ".env.production", ".env.test",
-    ".DS_Store", "Thumbs.db", "desktop.ini", "*.swp", "*.swo", "*.swn",
-    "*.swm", "*.swl", "*.swk", "*.swj", "*.swh", "*.swc", "*.swb"
-  }
+	-- Default directories to exclude (always included)
+	local default_exclude_dirs = {
+		"node_modules",
+		"target",
+		".git",
+		"resources",
+		".idea",
+		".vscode",
+		"__pycache__",
+		"venv",
+		".venv",
+		".mypy_cache",
+		".pytest_cache",
+		"build",
+		"dist",
+		"out",
+		"docs",
+		"env",
+	}
+	-- Default files to exclude (always included)
+	local default_exclude_files = {
+		"file_dir_to_txt_exclude.sh",
+		"file_dir_to_txt_exclude2.sh",
+		".gitignore",
+		"serverall.js",
+		".env",
+		"all.txt",
+		"tree.txt",
+		"go.sum",
+		"package-lock.json",
+		"yarn.lock",
+		".next",
+		".env.local",
+		".env.development.local",
+		".env.production.local",
+		".env.test.local",
+		".env.development",
+		".env.production",
+		".env.test",
+		".DS_Store",
+		"Thumbs.db",
+		"desktop.ini",
+		"*.swp",
+		"*.swo",
+		"*.swn",
+		"*.swm",
+		"*.swl",
+		"*.swk",
+		"*.swj",
+		"*.swh",
+		"*.swc",
+		"*.swb",
+	}
 
-  -- Prompt for additional directories and files to exclude in one input
-  local user_exclusions = vim.fn.input("Enter additional directories and files to exclude (space-separated, press Enter to skip): ")
-  local exclude_dirs = default_exclude_dirs
-  local exclude_files = default_exclude_files
+	-- Prompt for additional directories and files to exclude in one input
+	local user_exclusions =
+		vim.fn.input("Enter additional directories and files to exclude (space-separated, press Enter to skip): ")
+	local exclude_dirs = default_exclude_dirs
+	local exclude_files = default_exclude_files
 
-  if user_exclusions ~= "" then
-    for item in user_exclusions:gmatch("%S+") do
-      -- Assume items with a dot (.) are files, otherwise directories
-      if item:match("%.") then
-        table.insert(exclude_files, item)
-      else
-        table.insert(exclude_dirs, item)
-      end
-    end
-  end
+	if user_exclusions ~= "" then
+		for item in user_exclusions:gmatch("%S+") do
+			-- Assume items with a dot (.) are files, otherwise directories
+			if item:match("%.") then
+				table.insert(exclude_files, item)
+			else
+				table.insert(exclude_dirs, item)
+			end
+		end
+	end
 
-  -- Convert tables to space-separated strings for the shell command
-  local exclude_dirs_str = table.concat(exclude_dirs, " ")
-  local exclude_files_str = table.concat(exclude_files, " ")
+	-- Convert tables to space-separated strings for the shell command
+	local exclude_dirs_str = table.concat(exclude_dirs, " ")
+	local exclude_files_str = table.concat(exclude_files, " ")
 
-  -- Change to the current working directory
-  vim.cmd("cd " .. vim.fn.getcwd())
-  -- Construct and execute the shell command
-  local shell_cmd = string.format("!/home/m/.config/nvim/file_dir_to_txt_exclude2.sh %s %s && xclip -selection clipboard all.txt", exclude_dirs_str, exclude_files_str)
-  vim.cmd(shell_cmd)
+	-- Change to the current working directory
+	vim.cmd("cd " .. vim.fn.getcwd())
+	-- Construct and execute the shell command
+	local shell_cmd = string.format(
+		"!/home/m/.config/nvim/file_dir_to_txt_exclude2.sh %s %s && xclip -selection clipboard all.txt",
+		exclude_dirs_str,
+		exclude_files_str
+	)
+	vim.cmd(shell_cmd)
 end
 
-vim.keymap.set("n", "<Leader>ye", ":lua YankWithCustomExclusions()<CR>", { noremap = true, silent = false, desc = "yank all with custom exclusions" })
+vim.keymap.set(
+	"n",
+	"<Leader>ye",
+	":lua YankWithCustomExclusions()<CR>",
+	{ noremap = true, silent = false, desc = "yank all with custom exclusions" }
+)
 
 --- Yanks the relative file path of the current buffer without its extension to the clipboard.
 -- Retrieves the relative path of the current file, removes its extension, and copies it to
 -- both the '+' (system) and '*' (primary) clipboard registers. Prints a confirmation message.
 -- @return nil
 function yank_relative_file_path_without_ex()
-  -- Get the relative file path
-  local relative_path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
-  -- Remove the file extension
-  local path_without_extension = vim.fn.fnamemodify(relative_path, ":r")
-  -- Copy to clipboard registers
-  vim.fn.setreg("+", path_without_extension)
-  vim.fn.setreg("*", path_without_extension)
-  -- Print confirmation message
-  print("Relative file path (without extension) copied to clipboard: " .. path_without_extension)
+	-- Get the relative file path
+	local relative_path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
+	-- Remove the file extension
+	local path_without_extension = vim.fn.fnamemodify(relative_path, ":r")
+	-- Copy to clipboard registers
+	vim.fn.setreg("+", path_without_extension)
+	vim.fn.setreg("*", path_without_extension)
+	-- Print confirmation message
+	print("Relative file path (without extension) copied to clipboard: " .. path_without_extension)
 end
 
 -- vim.keymap.set("n", "<Leader>yt", ":cd %:p:h<CR>:!tree -I 'node_modules|venv|.git|.idea|vendor|__pycache__|.pytest_cache|target|dist|bin|obj|.next' -L 4 > tree.txt<CR>", { noremap = true, silent = false })
 -- vim.keymap.set("n", "<Leader>yt", ":cd %:p:h<CR>:!tree -I 'node_modules|venv|.git|.ide' -L 4 | tee tree.txt | xclip -selection clipboard<CR>", { noremap = true, silent = false, desc = "yank tree" })
-vim.keymap.set("n", "<Leader>yt", ":cd $PWD<CR>:!tree -I 'node_modules|venv|.git|.ide|all.txt|tree.txt' -L 4 | tee tree.txt | xclip -selection clipboard<CR>", { noremap = true, silent = false, desc = "yank tree" })
+vim.keymap.set(
+	"n",
+	"<Leader>yt",
+	":cd $PWD<CR>:!tree -I 'node_modules|venv|.git|.ide|all.txt|tree.txt' -L 4 | tee tree.txt | xclip -selection clipboard<CR>",
+	{ noremap = true, silent = false, desc = "yank tree" }
+)
 
 -- Combine yank tree and yank all, with tree output at the end in all.txt
-vim.keymap.set("n", "<Leader>yh", ":cd $PWD<CR>:!tree -I 'node_modules|venv|.git|.ide|all.txt|tree.txt' -L 4 > tree.txt && /home/m/.config/nvim/file_dir_to_txt_exclude.sh > all.txt && cat tree.txt >> all.txt && xclip -selection clipboard all.txt<CR>", { noremap = true, silent = false, desc = "yank tree and all" })
+vim.keymap.set(
+	"n",
+	"<Leader>yh",
+	":cd $PWD<CR>:!tree -I 'node_modules|venv|.git|.ide|all.txt|tree.txt' -L 4 > tree.txt && /home/m/.config/nvim/file_dir_to_txt_exclude.sh > all.txt && cat tree.txt >> all.txt && xclip -selection clipboard all.txt<CR>",
+	{ noremap = true, silent = false, desc = "yank tree and all" }
+)
 -- Key mapping
 -- vim.keymap.set("n", "<Leader>yr", ":lua yank_relative_file_path_without_ex()<CR>", { noremap = true, silent = true })
 -- function yank_file_name()
@@ -656,14 +761,13 @@ vim.keymap.set("n", "<Leader>yh", ":cd $PWD<CR>:!tree -I 'node_modules|venv|.git
 -- vim.keymap.set("n", "F3", "<cmd>set list!<cr>")
 -- vim.keymap.set("n", "<F3>", "<cmd>set listchars=tab:»·,trail:·,nbsp:_,eol:¬<cr>", { desc = "Set custom listchars" })
 vim.keymap.set("n", "<F3>", function()
-    if vim.opt.list:get() then
-        vim.opt.list = false
-    else
-        vim.opt.listchars = { tab = "»·", trail = "·", nbsp = "_", eol = "¬" }
-        vim.opt.list = true
-    end
+	if vim.opt.list:get() then
+		vim.opt.list = false
+	else
+		vim.opt.listchars = { tab = "»·", trail = "·", nbsp = "_", eol = "¬" }
+		vim.opt.list = true
+	end
 end, { desc = "Toggle custom listchars" })
-
 
 -- Stay in indent mode.
 vim.keymap.set("v", "<", "<gv")
@@ -742,5 +846,3 @@ vim.keymap.set("n", "zs", "zMzvzz")
 --vim.keymap.set("n", "<leader>wr", "<cmd>%s/\r//g<cr>")
 --vim.keymap.set("n", "<leader>wt", "mz<cmd>%s/\t/  /g<cr><cmd>let @/=''<cr>`z")
 --vim.keymap.set("n", "<leader>ww", [[mz<cmd>%s//\\s\\+$////<cr><cmd>let @/=''<cr>`z]])
-
-
