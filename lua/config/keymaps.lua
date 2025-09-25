@@ -313,8 +313,8 @@ vim.keymap.set(
 -- vim.api.nvim_set_keymap("n", "gp", "_:put<CR>", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap("n", "gp", "v_p", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<a-p>", ":put!<cr>==", { noremap = true, silent = true }) --paste above
-vim.api.nvim_set_keymap("n", "<leader>p", ":put<cr>==", { noremap = true, silent = true }) --paste below
+vim.api.nvim_set_keymap("n", "<a-p>", ":put!<cr>", { noremap = true, silent = true }) --paste above
+vim.api.nvim_set_keymap("n", "<leader>p", ":put<cr>", { noremap = true, silent = true }) --paste below
 
 vim.api.nvim_set_keymap("i", "<a-p>", "<c-r>+", { noremap = true }) --system clipboard
 -- vim.api.nvim_set_keymap("i", "<a-s-p>", "<C-o>:put!<CR>", { noremap = true, silent = true }) --paste above

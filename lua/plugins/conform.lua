@@ -1,41 +1,56 @@
--- lua/plugins/conform.lua
 return {
-  "stevearc/conform.nvim",
-  event = { "BufWritePre" },
-  cmd = { "ConformInfo" },
-  opts = {
-    formatters_by_ft = {
-      lua = { "stylua" }, -- Lua formatting
-      python = { "black", "isort" }, -- Python: formatting and import sorting
-      rust = { "rustfmt" }, -- Rust formatting
-      ruby = { "rubocop" }, -- Ruby formatting/linting
-      javascript = { "prettier" }, -- JavaScript formatting
-      typescript = { "prettier" }, -- TypeScript formatting
-      go = { "gofmt" }, -- Go formatting
-      java = { "google-java-format" }, -- Java formatting
-      php = { "phpcbf" }, -- PHP formatting with PHP_CodeSniffer
-      c = { "clang-format" }, -- C formatting
-      cpp = { "clang-format" }, -- C++ formatting
-      cs = { "csharpier" }, -- C# formatting
-      html = { "prettier" }, -- HTML formatting
-      css = { "prettier" }, -- CSS formatting
-      json = { "prettier" }, -- JSON formatting
-      markdown = { "prettier" }, -- Markdown formatting
-    },
-    format_on_save = {
-      timeout_ms = 1000, -- Increase timeout for larger files
-      lsp_fallback = true, -- Fallback to LSP if formatter unavailable
-    },
-    formatters = {
-      prettier = {
-        prepend_args = { "--single-quote", "--jsx-single-quote" }, -- Example for JS/TS, HTML, CSS, JSON, Markdown
-      },
-    },
-  },
-  init = function()
-    -- Set keymap for manual formatting
-    vim.keymap.set({ "n", "v" }, "<leader>ft", function()
-      require("conform").format({ async = true, lsp_fallback = true })
-    end, { desc = "Format file or range" })
-  end,
+	"stevearc/conform.nvim",
+	event = { "BufWritePre" },
+	cmd = { "ConformInfo" },
+	opts = {
+		formatters_by_ft = {
+			lua = { "stylua" },
+			python = { "black", "isort" },
+			rust = { "rustfmt" },
+			ruby = { "rubocop" },
+			javascript = { "prettier" },
+			typescript = { "prettier" },
+			go = { "gofmt" },
+			java = { "google-java-format" },
+			php = { "phpcbf" },
+			c = { "clang-format" },
+			cpp = { "clang-format" },
+			cs = { "csharpier" },
+			html = { "prettier" },
+			css = { "prettier" },
+			json = { "prettier" },
+			markdown = { "prettier" },
+			yaml = { "yamlfmt" }, -- Added example
+		},
+		-- format_on_save = function(bufnr)
+		-- 	if vim.b[bufnr].disable_format_on_save then
+		-- 		return
+		-- 	end
+		-- 	return { timeout_ms = 1000, lsp_fallback = true }
+		-- end,
+		formatters = {
+			prettier = {
+				prepend_args = {
+					"--single-quote",
+					"--jsx-single-quote",
+					"--trailing-comma",
+					"es5",
+					"--tab-width",
+					"2",
+				},
+			},
+		},
+		log_level = vim.log.levels.DEBUG, -- Enable debug logging
+	},
+	init = function()
+		vim.keymap.set({ "n", "v" }, "<leader>ff", function()
+			require("conform").format({
+				async = true,
+				lsp_fallback = true,
+				on_error = function(err)
+					vim.notify("Formatting failed: " .. err, vim.log.levels.ERROR)
+				end,
+			})
+		end, { desc = "Format file or range" })
+	end,
 }
