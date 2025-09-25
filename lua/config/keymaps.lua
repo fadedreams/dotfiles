@@ -313,15 +313,12 @@ vim.keymap.set(
 -- vim.api.nvim_set_keymap("n", "gp", "_:put<CR>", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap("n", "gp", "v_p", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<a-p>", ":put!<CR>", { noremap = true, silent = true }) --paste above
-vim.api.nvim_set_keymap("n", "<leader>p", ":put<CR>", { noremap = true, silent = true }) --paste below
-vim.api.nvim_set_keymap("i", "<a-p>", "<C-r>+", { noremap = true }) --system clipboard
+vim.api.nvim_set_keymap("n", "<a-p>", ":put!<cr>==", { noremap = true, silent = true }) --paste above
+vim.api.nvim_set_keymap("n", "<leader>p", ":put<cr>==", { noremap = true, silent = true }) --paste below
 
--- vim.keymap.set('n', '<Leader>p', 'P', { noremap = true, silent = true })
--- Map Alt+p in Insert Mode to paste from the system clipboard
--- vim.keymap.set('i', '<A-p>', '<Nop>', { noremap = true }) -- Clear any existing mapping
--- vim.keymap.set('i', '<A-p>', '<C-r>*', { noremap = true, silent = true }) -- Set your desired mapping
--- vim.keymap.set('n', '-p', 'P', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<a-p>", "<c-r>+", { noremap = true }) --system clipboard
+-- vim.api.nvim_set_keymap("i", "<a-s-p>", "<C-o>:put!<CR>", { noremap = true, silent = true }) --paste above
+-- vim.api.nvim_set_keymap("i", "<c-s-p>", "<C-o>:put<CR>", { noremap = true, silent = true }) -- paste below
 
 -- vim.api.nvim_set_keymap("i", "<a-s-p>", "<C-o>:put<CR>", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap("i", "<a-c-P>", "<C-o>:put!<CR>", { noremap = true, silent = true })

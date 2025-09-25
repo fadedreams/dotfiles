@@ -13,15 +13,17 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 ~/.config/nvim
-badd +3 lua/plugins/tokyonight.lua
-badd +262 lua/config/keymaps.lua
+badd +102 lua/plugins/tokyonight.lua
+badd +318 lua/config/keymaps.lua
+badd +7 lua/plugins/neo-tree.lua
+badd +15 lua/plugins/octo.lua
+badd +204 lua/plugins/lsp.lua
 argglobal
 %argdel
-$argadd ~/.config/nvim
+$argadd ~/.config/nvim/
 edit lua/config/keymaps.lua
 argglobal
-balt lua/plugins/tokyonight.lua
+balt lua/plugins/lsp.lua
 setlocal foldmethod=manual
 setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
 setlocal foldmarker={{{,}}}
@@ -32,12 +34,12 @@ setlocal foldnestmax=20
 setlocal foldenable
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 262 - ((9 * winheight(0) + 18) / 36)
+let s:l = 318 - ((18 * winheight(0) + 18) / 36)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 262
-normal! 0
+keepjumps 318
+normal! 047|
 lcd ~/.config/nvim
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
@@ -52,7 +54,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

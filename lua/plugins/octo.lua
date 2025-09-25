@@ -12,6 +12,14 @@ return {
 			{ "<leader>gi", "<cmd>Octo issue list<cr>", desc = "List GitHub Issues" },
 			{ "<leader>gp", "<cmd>Octo pr list<cr>", desc = "List GitHub PRs" },
 			{ "<leader>gc", "<cmd>Octo issue create<cr>", desc = "Create GitHub Issue" },
+			{ "<leader>gcc", "<cmd>Octo comment add<cr>", desc = "Add Comment to Issue" },
+			{ "<leader>gr", "<cmd>Octo pr create<cr>", desc = "Create GitHub PR" },
+			{ "<leader>gic", "<cmd>Octo issue close<cr>", desc = "Close GitHub Issue" },
+			{ "<leader>gir", "<cmd>Octo issue reopen<cr>", desc = "Reopen GitHub Issue" },
+			{ "<leader>ge", "<cmd>Octo issue edit<cr>", desc = "Edit GitHub Issue" },
+			{ "<leader>gpr", "<cmd>Octo review start<cr>", desc = "Start PR Review" },
+			{ "<leader>gps", "<cmd>Octo review submit<cr>", desc = "Submit PR Review" },
+			{ "<leader>gb", "<cmd>Octo issue browser<cr>", desc = "Open Issue/PR in Browser" },
 		},
 		opts = function()
 			return {

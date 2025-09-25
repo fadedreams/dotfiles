@@ -1,0 +1,26 @@
+return {
+	{
+		"tpope/vim-rsi",
+		event = { "InsertEnter", "CmdlineEnter" }, -- Lazy-load on insert or command-line mode
+		init = function()
+			vim.g.rsi_no_mappings = 1 -- Disable default vim-rsi mappings
+		end,
+		config = function()
+			-- Insert mode mappings
+			vim.keymap.set("i", "<a-h>", "<Left>", { desc = "Move left (Readline-style)" })
+			vim.keymap.set("i", "<a-l>", "<Right>", { desc = "Move right (Readline-style)" })
+			vim.keymap.set("i", "<a-$>", "<Home>", { desc = "Move to start of line" })
+			vim.keymap.set("i", "<a-->", "<End>", { desc = "Move to end of line" })
+			vim.keymap.set("i", "<Up>", "<a-m>", { desc = "Move up (previous line)" })
+			vim.keymap.set("i", "<Down>", "<a-n>", { desc = "Move down (next line)" })
+
+			-- Command-line mode mappings
+			vim.keymap.set("c", "<a-h>", "<Left>", { desc = "Move left (cmdline)" })
+			vim.keymap.set("c", "<a-l>", "<Right>", { desc = "Move right (cmdline)" })
+			vim.keymap.set("c", "<a-$>", "<Home>", { desc = "Move to start of cmdline" })
+			vim.keymap.set("c", "<a-->", "<End>", { desc = "Move to end of cmdline" })
+			vim.keymap.set("c", "<Up>", "<a-m>", { desc = "Previous command history" })
+			vim.keymap.set("c", "<Down>", "<a-n>", { desc = "Next command history" })
+		end,
+	},
+}
