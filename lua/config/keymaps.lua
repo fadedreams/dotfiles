@@ -87,7 +87,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- windows
 vim.keymap.set(
 	"n",
-	"<Leader>go",
+	"<Leader>fo",
 	":silent !xdg-open %:p:h<CR>",
 	{ noremap = true, silent = true, desc = "Open file explorer" }
 )

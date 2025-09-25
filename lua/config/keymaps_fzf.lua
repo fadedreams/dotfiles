@@ -2,55 +2,55 @@ local fzf = require("fzf-lua")
 -- local actions = require("fzf-lua.actions")
 
 local exclude_list_sp = {
-  "all.txt",
-  "tree.txt",
+	"all.txt",
+	"tree.txt",
 }
 -- Define an exclude list
 -- local exclude_list = { ".git", "node_modules", "dist", ".idea", "build" }
 local exclude_list = {
-  "LICENSE",
-  ".git",
-  "node_modules",
-  -- "dist",
-    ".idea",
-    -- "build",
-    -- "vendor",
-    -- "target", -- common dirs
-    "venv",
-    "*.pyc",
-    "*.pyo",
-    -- "*.log",
-    -- "*.bak", -- Python
-    "*.exe",
-    "*.out",
-    "*.o",
-    "*.a", -- Golang
-    -- "*.rlib", -- Rust
-    "*.phtml",
-    "*.phar", -- PHP
-    "*.tsx", -- Node.js
-    "*.luarocks",
-    "*.rock", -- Lua
-    "*.class",
-    "*.jar",
-    "*.war", -- Java (if applicable)
-    "*.swp",
-    "*.swo", -- Swap files
+	"LICENSE",
+	".git",
+	"node_modules",
+	-- "dist",
+	".idea",
+	-- "build",
+	-- "vendor",
+	-- "target", -- common dirs
+	"venv",
+	"*.pyc",
+	"*.pyo",
+	-- "*.log",
+	-- "*.bak", -- Python
+	"*.exe",
+	"*.out",
+	"*.o",
+	"*.a", -- Golang
+	-- "*.rlib", -- Rust
+	"*.phtml",
+	"*.phar", -- PHP
+	"*.tsx", -- Node.js
+	"*.luarocks",
+	"*.rock", -- Lua
+	"*.class",
+	"*.jar",
+	"*.war", -- Java (if applicable)
+	"*.swp",
+	"*.swo", -- Swap files
 }
 
 -- Function to build the exclude options for fd and rg commands
 local function build_exclude_opts(exclude_list, command_type)
-    local exclude_opts = {}
-    if command_type == "fd" then
-        for _, exclude in ipairs(exclude_list) do
-            table.insert(exclude_opts, "--exclude " .. exclude)
-        end
-    elseif command_type == "rg" then
-        for _, exclude in ipairs(exclude_list) do
-            table.insert(exclude_opts, "--glob '!*" .. exclude .. "'")
-        end
-    end
-    return table.concat(exclude_opts, " ")
+	local exclude_opts = {}
+	if command_type == "fd" then
+		for _, exclude in ipairs(exclude_list) do
+			table.insert(exclude_opts, "--exclude " .. exclude)
+		end
+	elseif command_type == "rg" then
+		for _, exclude in ipairs(exclude_list) do
+			table.insert(exclude_opts, "--glob '!*" .. exclude .. "'")
+		end
+	end
+	return table.concat(exclude_opts, " ")
 end
 
 local exclude_opts_rg = build_exclude_opts(exclude_list, "rg")
@@ -81,13 +81,13 @@ local exclude_opts_fd = build_exclude_opts(exclude_list, "fd")
 -- end, { noremap = true, silent = true, desc = "Find files" })
 
 vim.keymap.set("n", "<leader><leader>", function()
-    local exclude_opts = build_exclude_opts(exclude_list, "fd")
-    -- print("exclude_opts: " .. exclude_opts)
-    fzf.files({
-        cmd = "fd --type f --hidden " .. exclude_opts, -- Search for files, excluding specified patterns recursively
-        cwd = vim.loop.cwd(), -- Set current working directory
-        prompt = "Files> ", -- Custom prompt for clarity
-    })
+	local exclude_opts = build_exclude_opts(exclude_list, "fd")
+	-- print("exclude_opts: " .. exclude_opts)
+	fzf.files({
+		cmd = "fd --type f --hidden " .. exclude_opts, -- Search for files, excluding specified patterns recursively
+		cwd = vim.loop.cwd(), -- Set current working directory
+		prompt = "Files> ", -- Custom prompt for clarity
+	})
 end, { noremap = true, silent = true, desc = "Find files" })
 -- Keymap to list all files and directories in the current folder
 -- vim.keymap.set(
@@ -144,12 +144,12 @@ end, { noremap = true, silent = true, desc = "Find files" })
 -- end, { noremap = true, silent = true, desc = "Search for Directories" })
 
 vim.keymap.set("n", "<leader>fd", function()
-    -- local exclude_opts = build_exclude_opts(exclude_list, "fd")
-    fzf.files({
-        cmd = "fd --type d --hidden " .. exclude_opts_fd, -- Search for directories, including hidden ones
-        cwd = vim.loop.cwd(), -- Set current working directory
-        prompt = "Directories> ", -- Custom prompt for clarity
-    })
+	-- local exclude_opts = build_exclude_opts(exclude_list, "fd")
+	fzf.files({
+		cmd = "fd --type d --hidden " .. exclude_opts_fd, -- Search for directories, including hidden ones
+		cwd = vim.loop.cwd(), -- Set current working directory
+		prompt = "Directories> ", -- Custom prompt for clarity
+	})
 end, { noremap = true, silent = true, desc = "Search for Directories" })
 
 -- Search for files
@@ -175,15 +175,18 @@ end, { noremap = true, silent = true, desc = "Search for Directories" })
 -- end, { noremap = true, silent = true, desc = "Live grep" })
 
 vim.keymap.set("n", "<leader>n", function()
-    -- local exclude_opts = build_exclude_opts(exclude_list, "rg")
-    fzf.live_grep({ rg_opts = "--hidden --no-ignore " .. combined_opts  })
+	-- local exclude_opts = build_exclude_opts(exclude_list, "rg")
+	fzf.live_grep({ rg_opts = "--hidden --no-ignore --ignore-case " .. combined_opts })
 end, { noremap = true, silent = true, desc = "Live grep (exclude multiple)" })
 
-
+vim.keymap.set("n", "<leader>fn", function()
+	-- local exclude_opts = build_exclude_opts(exclude_list, "rg")
+	fzf.live_grep({ rg_opts = "--hidden --no-ignore " .. combined_opts })
+end, { noremap = true, silent = true, desc = "Live grep (exclude multiple)" })
 
 vim.keymap.set("n", "<leader>m", function()
-    -- local exclude_opts = build_exclude_opts(exclude_list, "rg")
-    fzf.resume()
+	-- local exclude_opts = build_exclude_opts(exclude_list, "rg")
+	fzf.resume()
 end, { noremap = true, silent = true, desc = "Resume previous live grep search" })
 
 -- vim.keymap.set("n", "<leader>fs", fzf.sessions, { desc = "Sessions" })
@@ -195,12 +198,12 @@ vim.keymap.set("n", "<leader>;", fzf.registers, { desc = "Registers" }) -- Find 
 vim.keymap.set("n", "<leader>`", fzf.marks, { desc = "Find marks" }) -- Find marks
 -- vim.keymap.set("n", "<leader>,", fzf.buffers, { desc = "FZF Buffers" })
 vim.keymap.set("n", "<leader>,", function()
-    fzf.buffers({
-        prompt = "Buffers> ",
-        fzf_opts = {
-            ["--preview"] = "bat --style=numbers --color=always --line-range :500 {}",
-        },
-    })
+	fzf.buffers({
+		prompt = "Buffers> ",
+		fzf_opts = {
+			["--preview"] = "bat --style=numbers --color=always --line-range :500 {}",
+		},
+	})
 end, { noremap = true, silent = true, desc = "FZF Buffers with preview" })
 
 vim.keymap.set("n", "<leader>fr", fzf.oldfiles, { desc = "Recent Files" })
@@ -254,15 +257,27 @@ vim.keymap.set("n", "<leader>fk", fzf.keymaps, { desc = "keymaps" }) -- Find key
 --     })
 -- end, { noremap = true, silent = true, desc = "Search text" })
 
+--case sensitive
+vim.keymap.set("n", "<leader>f1", function()
+	local word = vim.fn.expand("<cword>") -- Get the word under the cursor
+	-- local exclude_opts = build_exclude_opts(exclude_list, "rg")
+	fzf.live_grep({
+		search = word, -- Pre-fill the search with the word under cursor
+		rg_opts = "--line-number --hidden " .. combined_opts, -- Search text in hidden files
+		cwd = vim.loop.cwd(), -- Set current working directory
+		prompt = "Grep Text (hidden)> ", -- Updated prompt to reflect text search
+	})
+end, { noremap = true, silent = true, desc = "Search text" })
+
 vim.keymap.set("n", "<leader>1", function()
-    local word = vim.fn.expand("<cword>") -- Get the word under the cursor
-    -- local exclude_opts = build_exclude_opts(exclude_list, "rg")
-    fzf.live_grep({
-        search = word, -- Pre-fill the search with the word under cursor
-        rg_opts = "--line-number --hidden " .. combined_opts, -- Search text in hidden files
-        cwd = vim.loop.cwd(), -- Set current working directory
-        prompt = "Grep Text (hidden)> ", -- Updated prompt to reflect text search
-    })
+	local word = vim.fn.expand("<cword>") -- Get the word under the cursor
+	-- local exclude_opts = build_exclude_opts(exclude_list, "rg")
+	fzf.live_grep({
+		search = word, -- Pre-fill the search with the word under cursor
+		rg_opts = "--line-number --hidden --ignore-case " .. combined_opts, -- Search text in hidden files
+		cwd = vim.loop.cwd(), -- Set current working directory
+		prompt = "Grep Text (hidden)> ", -- Updated prompt to reflect text search
+	})
 end, { noremap = true, silent = true, desc = "Search text" })
 
 -- vim.keymap.set("n", "<leader>1", function()
@@ -272,43 +287,43 @@ end, { noremap = true, silent = true, desc = "Search text" })
 
 -- vim.keymap.set("n", "<leader>1", require("fzf-lua").grep_cword, { desc = "FZF Word" })
 vim.keymap.set("n", "<leader>4", function()
-    local line = vim.fn.getline(".") -- Get the current line
-    local cursor_col = vim.fn.col(".") -- Get the cursor column position
+	local line = vim.fn.getline(".") -- Get the current line
+	local cursor_col = vim.fn.col(".") -- Get the cursor column position
 
-    -- Define the pattern to match words, numbers, special characters, spaces, and curly braces
-    local pattern = "([%w%.%-%:\\,\\\\_-:?;%%!@#%$%^&*+%s/{}]+)" -- Added /{} to the pattern
-    -- local pattern = "([%w%.%-%:\\,\\\\_-:?;%%!@#%$%^&*+%s/{}()[]<>]+)" -- Added /{}()[]<> to the pattern
-    -- local pattern = "([%w]+%-[%w]+|[%w%.%:\\,\\\\_/?;%%!@#%$%^&*+%s{}()[]<>\"']+)"
-    local match_start, match_end = nil, nil
+	-- Define the pattern to match words, numbers, special characters, spaces, and curly braces
+	local pattern = "([%w%.%-%:\\,\\\\_-:?;%%!@#%$%^&*+%s/{}]+)" -- Added /{} to the pattern
+	-- local pattern = "([%w%.%-%:\\,\\\\_-:?;%%!@#%$%^&*+%s/{}()[]<>]+)" -- Added /{}()[]<> to the pattern
+	-- local pattern = "([%w]+%-[%w]+|[%w%.%:\\,\\\\_/?;%%!@#%$%^&*+%s{}()[]<>\"']+)"
+	local match_start, match_end = nil, nil
 
-    -- Search for the match in the line
-    for start, word in line:gmatch("()(" .. pattern .. ")") do
-        local finish = start + #word - 1
-        if cursor_col >= start and cursor_col <= finish then
-            match_start, match_end = start, finish
-            break
-        end
-    end
+	-- Search for the match in the line
+	for start, word in line:gmatch("()(" .. pattern .. ")") do
+		local finish = start + #word - 1
+		if cursor_col >= start and cursor_col <= finish then
+			match_start, match_end = start, finish
+			break
+		end
+	end
 
-    -- Trigger fzf.grep with the matched word
-    if match_start and match_end then
-        local match = line:sub(match_start, match_end)
-        fzf.grep({ search = match }) -- Use the match as the search term
-    else
-        print("No matching pattern found at cursor position")
-    end
-end, { noremap = true, silent = true , desc = "Search text under cursor" })
+	-- Trigger fzf.grep with the matched word
+	if match_start and match_end then
+		local match = line:sub(match_start, match_end)
+		fzf.grep({ search = match }) -- Use the match as the search term
+	else
+		print("No matching pattern found at cursor position")
+	end
+end, { noremap = true, silent = true, desc = "Search text under cursor" })
 
 -- vim.keymap.set("n", "<leader>1q", fzf.grep_cWORD, { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>2", function()
-    local word = vim.fn.expand("<cword>") -- Get the word under the cursor
-    -- local exclude_opts = build_exclude_opts(exclude_list, "fd")
-    fzf.files({
-        query = word,
-        cmd = "fd --type f --type d --hidden " .. exclude_opts_fd, -- Search for hidden files and directories
-        cwd = vim.loop.cwd(), -- Set current working directory
-    })
+	local word = vim.fn.expand("<cword>") -- Get the word under the cursor
+	-- local exclude_opts = build_exclude_opts(exclude_list, "fd")
+	fzf.files({
+		query = word,
+		cmd = "fd --type f --type d --hidden " .. exclude_opts_fd, -- Search for hidden files and directories
+		cwd = vim.loop.cwd(), -- Set current working directory
+	})
 end, { noremap = true, silent = true, desc = "Search files under cursor" })
 
 -- vim.keymap.set("n", "<leader>5", function()
@@ -340,13 +355,13 @@ end, { noremap = true, silent = true, desc = "Search files under cursor" })
 -- end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>3", function()
-    local word = vim.fn.expand("<cword>") -- Get the word under the cursor
-    -- local exclude_opts = build_exclude_opts(exclude_list, "fd")
-    fzf.files({
-        query = word,
-        cmd = "fd --type d --hidden " .. exclude_opts_fd, -- Search for hidden directories
-        cwd = vim.loop.cwd(), -- Set current working directory
-    })
+	local word = vim.fn.expand("<cword>") -- Get the word under the cursor
+	-- local exclude_opts = build_exclude_opts(exclude_list, "fd")
+	fzf.files({
+		query = word,
+		cmd = "fd --type d --hidden " .. exclude_opts_fd, -- Search for hidden directories
+		cwd = vim.loop.cwd(), -- Set current working directory
+	})
 end, { noremap = true, silent = true, desc = "Search directories under cursor" })
 
 -- Search for directories with specific query
@@ -373,10 +388,10 @@ end, { noremap = true, silent = true, desc = "Search directories under cursor" }
 -- end, { noremap = true, silent = true })
 --
 local function get_visual_selection()
-    local selection = table.concat(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos(".")), "\n")
-    -- Escape the '@' symbol in the selected text
-    selection = string.gsub(selection, "@", "\\@")
-    return selection
+	local selection = table.concat(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos(".")), "\n")
+	-- Escape the '@' symbol in the selected text
+	selection = string.gsub(selection, "@", "\\@")
+	return selection
 end
 
 -- vim.keymap.set("v", "<C-f>", function()
@@ -398,173 +413,171 @@ vim.keymap.set("v", "<leader>1", fzf.grep_visual, { desc = "fzf selection" })
 -- end, { noremap = true, silent = true })
 
 vim.keymap.set("v", "<leader>2", function()
-    local search_term = get_visual_selection() -- get the selected text in visual mode
-    print("search_term: '" .. search_term .. "'") -- debugging: check the value of search_term
-    if search_term == "" then
-        print("no text selected.")
-        return
-    end
+	local search_term = get_visual_selection() -- get the selected text in visual mode
+	print("search_term: '" .. search_term .. "'") -- debugging: check the value of search_term
+	if search_term == "" then
+		print("no text selected.")
+		return
+	end
 
-    local cwd = vim.loop.cwd() -- Get the current working directory
-    -- local exclude_opts = build_exclude_opts(exclude_list, "fd")
-    local fzf_opts = {
-        query = search_term, -- Set the search term (from the visual selection)
-        cwd = cwd, -- Set the current directory as cwd
-        find_command = { "fd", "--type", "f", "--hidden", exclude_opts_fd }, -- Only search for directories with fd
-    }
-    -- Trigger fzf-lua with the find_command option for searching directories
-    fzf.files(fzf_opts)
+	local cwd = vim.loop.cwd() -- Get the current working directory
+	-- local exclude_opts = build_exclude_opts(exclude_list, "fd")
+	local fzf_opts = {
+		query = search_term, -- Set the search term (from the visual selection)
+		cwd = cwd, -- Set the current directory as cwd
+		find_command = { "fd", "--type", "f", "--hidden", exclude_opts_fd }, -- Only search for directories with fd
+	}
+	-- Trigger fzf-lua with the find_command option for searching directories
+	fzf.files(fzf_opts)
 end, { desc = "FZF Directory Search", noremap = true, silent = true })
 
 vim.keymap.set("v", "<leader>3", function()
-    local search_term = get_visual_selection() -- get the selected text in visual mode
-    print("search_term: '" .. search_term .. "'") -- debugging: check the value of search_term
-    if search_term == "" then
-        print("no text selected.")
-        return
-    end
+	local search_term = get_visual_selection() -- get the selected text in visual mode
+	print("search_term: '" .. search_term .. "'") -- debugging: check the value of search_term
+	if search_term == "" then
+		print("no text selected.")
+		return
+	end
 
-    local cwd = vim.loop.cwd() -- Get the current working directory
-    -- local exclude_opts = build_exclude_opts(exclude_list, "fd")
-    local fzf_opts = {
-        query = search_term, -- Set the search term (from the visual selection)
-        cwd = cwd, -- Set the current directory as cwd
-        find_command = { "fd", "--type", "d", "--hidden", exclude_opts_fd }, -- Only search for directories with fd
-    }
-    -- Trigger fzf-lua with the find_command option for searching directories
-    fzf.files(fzf_opts)
+	local cwd = vim.loop.cwd() -- Get the current working directory
+	-- local exclude_opts = build_exclude_opts(exclude_list, "fd")
+	local fzf_opts = {
+		query = search_term, -- Set the search term (from the visual selection)
+		cwd = cwd, -- Set the current directory as cwd
+		find_command = { "fd", "--type", "d", "--hidden", exclude_opts_fd }, -- Only search for directories with fd
+	}
+	-- Trigger fzf-lua with the find_command option for searching directories
+	fzf.files(fzf_opts)
 end, { desc = "FZF Directory Search", noremap = true, silent = true })
 
 vim.keymap.set({ "n", "v", "i" }, "<leader>fp", function()
-    require("fzf-lua").complete_path()
+	require("fzf-lua").complete_path()
 end, { silent = true, desc = "Fuzzy complete path" })
 
 vim.keymap.set({ "n", "v" }, "<leader>fp", function()
-    require("fzf-lua").complete_path()
+	require("fzf-lua").complete_path()
 end, { silent = true, desc = "Fuzzy complete path" })
-
 
 -- Live grep with multiple file extensions for text search
 -- Add this keymap to your existing configuration
 
 vim.keymap.set("n", "<leader>fe", function()
-    local input = vim.fn.input("Exclude extensions (space separated, e.g. js ts): ")
-    if input == "" then
-        fzf.files({
-            cmd = "fd --type f --hidden " .. exclude_opts_fd,
-            cwd = vim.loop.cwd(),
-            prompt = "Files> ",
-        })
-        return
-    end
+	local input = vim.fn.input("Exclude extensions (space separated, e.g. js ts): ")
+	if input == "" then
+		fzf.files({
+			cmd = "fd --type f --hidden " .. exclude_opts_fd,
+			cwd = vim.loop.cwd(),
+			prompt = "Files> ",
+		})
+		return
+	end
 
-    local glob_filters = {}
-    for ext in input:gmatch("%S+") do
-        if not ext:match("^%.") then
-            ext = "." .. ext
-        end
-        table.insert(glob_filters, "--glob '*" .. ext .. "'")
-    end
+	local glob_filters = {}
+	for ext in input:gmatch("%S+") do
+		if not ext:match("^%.") then
+			ext = "." .. ext
+		end
+		table.insert(glob_filters, "--glob '*" .. ext .. "'")
+	end
 
-    local all_excludes = {}
-    for _, e in ipairs(exclude_list) do
-        table.insert(all_excludes, e)
-    end
-    for _, e in ipairs(glob_filters) do
-        table.insert(all_excludes, e)
-    end
+	local all_excludes = {}
+	for _, e in ipairs(exclude_list) do
+		table.insert(all_excludes, e)
+	end
+	for _, e in ipairs(glob_filters) do
+		table.insert(all_excludes, e)
+	end
 
-    local temp_exclude_opts = build_exclude_opts(all_excludes, "fd")
-    fzf.files({
-        cmd = "fd --type f --hidden " .. temp_exclude_opts,
-        cwd = vim.loop.cwd(),
-        prompt = "Files (excluding " .. input .. ")> ",
-    })
+	local temp_exclude_opts = build_exclude_opts(all_excludes, "fd")
+	fzf.files({
+		cmd = "fd --type f --hidden " .. temp_exclude_opts,
+		cwd = vim.loop.cwd(),
+		prompt = "Files (excluding " .. input .. ")> ",
+	})
 end, { noremap = true, silent = true, desc = "Find files excluding custom extensions" })
 
 vim.keymap.set("n", "<leader>fx", function()
-    local input = vim.fn.input("Search extensions (space separated, e.g. js yaml): ") -- Prompt for extensions
-    if input == "" then
-        print("No extensions provided, defaulting to all files.")
-        fzf.files({
-            cmd = "fd --type f --hidden " .. exclude_opts_fd, -- Fallback to all files with exclusions
-            cwd = vim.loop.cwd(),
-            prompt = "Files> ",
-        })
-        return
-    end
+	local input = vim.fn.input("Search extensions (space separated, e.g. js yaml): ") -- Prompt for extensions
+	if input == "" then
+		print("No extensions provided, defaulting to all files.")
+		fzf.files({
+			cmd = "fd --type f --hidden " .. exclude_opts_fd, -- Fallback to all files with exclusions
+			cwd = vim.loop.cwd(),
+			prompt = "Files> ",
+		})
+		return
+	end
 
-    local query = vim.fn.input("Search query (optional): ") -- Prompt for search query
-    local ext_filters = {}
-    for ext in input:gmatch("%S+") do
-        if not ext:match("^%.") then
-            ext = "." .. ext
-        end
-        table.insert(ext_filters, "--extension " .. ext:sub(2)) -- Remove leading dot for fd
-    end
+	local query = vim.fn.input("Search query (optional): ") -- Prompt for search query
+	local ext_filters = {}
+	for ext in input:gmatch("%S+") do
+		if not ext:match("^%.") then
+			ext = "." .. ext
+		end
+		table.insert(ext_filters, "--extension " .. ext:sub(2)) -- Remove leading dot for fd
+	end
 
-    local cmd = "fd --type f --hidden " .. table.concat(ext_filters, " ") .. " " .. exclude_opts_fd
-    fzf.files({
-        cmd = cmd, -- Search files with specified extensions
-        query = query ~= "" and query or nil, -- Use query if provided
-        cwd = vim.loop.cwd(),
-        prompt = "Files (" .. input .. ")> ", -- Custom prompt showing extensions
-    })
+	local cmd = "fd --type f --hidden " .. table.concat(ext_filters, " ") .. " " .. exclude_opts_fd
+	fzf.files({
+		cmd = cmd, -- Search files with specified extensions
+		query = query ~= "" and query or nil, -- Use query if provided
+		cwd = vim.loop.cwd(),
+		prompt = "Files (" .. input .. ")> ", -- Custom prompt showing extensions
+	})
 end, { noremap = true, silent = true, desc = "Search files by user-specified extensions" })
 
 vim.keymap.set("n", "<leader>xn", function()
-    local input = vim.fn.input("Search extensions (space separated, e.g. js yaml): ") -- Prompt for extensions
-    if input == "" then
-        print("No extensions provided, defaulting to all files.")
-        fzf.files({
-            cmd = "fd --type f --hidden " .. exclude_opts_fd, -- Fallback to all files with exclusions
-            cwd = vim.loop.cwd(),
-            prompt = "Files> ",
-        })
-        return
-    end
+	local input = vim.fn.input("Search extensions (space separated, e.g. js yaml): ") -- Prompt for extensions
+	if input == "" then
+		print("No extensions provided, defaulting to all files.")
+		fzf.files({
+			cmd = "fd --type f --hidden " .. exclude_opts_fd, -- Fallback to all files with exclusions
+			cwd = vim.loop.cwd(),
+			prompt = "Files> ",
+		})
+		return
+	end
 
-    local glob_filters = {}
-    for ext in input:gmatch("%S+") do
-        if not ext:match("^%.") then
-            ext = "." .. ext
-        end
-        table.insert(glob_filters, "--glob '*" .. ext .. "'") -- Add glob pattern for ripgrep
-    end
+	local glob_filters = {}
+	for ext in input:gmatch("%S+") do
+		if not ext:match("^%.") then
+			ext = "." .. ext
+		end
+		table.insert(glob_filters, "--glob '*" .. ext .. "'") -- Add glob pattern for ripgrep
+	end
 
-    local rg_cmd = "--hidden --no-ignore " .. table.concat(glob_filters, " ") .. " " .. combined_opts
-    fzf.live_grep_glob({
-        rg_opts = rg_cmd, -- Search files with specified extensions using ripgrep
-        cwd = vim.loop.cwd(),
-        prompt = "Grep (" .. input .. ")> ", -- Custom prompt showing extensions
-    })
+	local rg_cmd = "--hidden --no-ignore " .. table.concat(glob_filters, " ") .. " " .. combined_opts
+	fzf.live_grep_glob({
+		rg_opts = rg_cmd, -- Search files with specified extensions using ripgrep
+		cwd = vim.loop.cwd(),
+		prompt = "Grep (" .. input .. ")> ", -- Custom prompt showing extensions
+	})
 end, { noremap = true, silent = true, desc = "Live grep by user-specified extensions" })
 
 vim.keymap.set("n", "<leader>en", function()
-    local input = vim.fn.input("Exclude extensions (space separated, e.g. js yaml): ") -- Prompt for extensions to exclude
-    if input == "" then
-        print("No extensions provided, defaulting to all files.")
-        fzf.files({
-            cmd = "fd --type f --hidden " .. exclude_opts_fd, -- Fallback to all files with exclusions
-            cwd = vim.loop.cwd(),
-            prompt = "Files> ",
-        })
-        return
-    end
+	local input = vim.fn.input("Exclude extensions (space separated, e.g. js yaml): ") -- Prompt for extensions to exclude
+	if input == "" then
+		print("No extensions provided, defaulting to all files.")
+		fzf.files({
+			cmd = "fd --type f --hidden " .. exclude_opts_fd, -- Fallback to all files with exclusions
+			cwd = vim.loop.cwd(),
+			prompt = "Files> ",
+		})
+		return
+	end
 
-    local glob_filters = {}
-    for ext in input:gmatch("%S+") do
-        if not ext:match("^%.") then
-            ext = "." .. ext
-        end
-        table.insert(glob_filters, "--glob '!*" .. ext .. "'") -- Add negative glob pattern for ripgrep
-    end
+	local glob_filters = {}
+	for ext in input:gmatch("%S+") do
+		if not ext:match("^%.") then
+			ext = "." .. ext
+		end
+		table.insert(glob_filters, "--glob '!*" .. ext .. "'") -- Add negative glob pattern for ripgrep
+	end
 
-    local rg_cmd = "--hidden --no-ignore " .. table.concat(glob_filters, " ") .. " " .. combined_opts
-    fzf.live_grep_glob({
-        rg_opts = rg_cmd, -- Search files excluding specified extensions using ripgrep
-        cwd = vim.loop.cwd(),
-        prompt = "Grep (excluding " .. input .. ")> ", -- Custom prompt showing excluded extensions
-    })
+	local rg_cmd = "--hidden --no-ignore " .. table.concat(glob_filters, " ") .. " " .. combined_opts
+	fzf.live_grep_glob({
+		rg_opts = rg_cmd, -- Search files excluding specified extensions using ripgrep
+		cwd = vim.loop.cwd(),
+		prompt = "Grep (excluding " .. input .. ")> ", -- Custom prompt showing excluded extensions
+	})
 end, { noremap = true, silent = true, desc = "Live grep excluding user-specified extensions" })
-
