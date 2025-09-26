@@ -49,7 +49,7 @@ return {
             .option("relativenumber", { name = "Relative number" })
             :map("<leader>tr")
           Snacks.toggle.diagnostics():map("<leader>td")
-          Snacks.toggle.line_number():map("<leader>tl")
+          -- Snacks.toggle.line_number():map("<leader>tl")
           Snacks.toggle.treesitter():map("<leader>tt")
           Snacks.toggle.inlay_hints():map("<leader>th")
           Snacks.toggle.indent():map("<leader>ti")

@@ -1,0 +1,50 @@
+-- Load Lazy if not exists
+local cache = vim.fn.stdpath("cache")
+local path = cache .. "/lazy/lazy.nvim"
+
+if not (vim.uv or vim.loop).fs_stat(path) then
+  local repo = "https://github.com/folke/lazy.nvim.git"
+  -- stylua: ignore
+  local out = vim.fn.system({
+    "git", "clone", "--filter=blob:none", "--branch=stable", repo, path
+  })
+  if vim.v.shell_error ~= 0 then
+    error("Error cloning lazy.nvim:\n" .. out)
+  end
+end
+
+-- Add lazypath to RTP
+vim.opt.rtp:prepend(path)
+
+local success, lazy = pcall(require, "lazy")
+if not success then
+  return
+end
+
+-- stylua: ignore
+local plugins_to_disable = {
+  "2html_plugin", "bugreport", "compiler", "getscript", "getscriptPlugin",
+  "gzip", "logipat", "matchit", "matchparen", "optwin", "rplugin", "rrhelper",
+  "netrw", "netrwFileHandlers", "netrwPlugin", "netrwSettings",
+  "spellfile_plugin", "synmenu", "syntax", "tar", "tarPlugin", "tohtml",
+  "tutor", "vimball", "vimballPlugin", "zip", "zipPlugin"
+}
+
+lazy.setup({
+  -- Move all files to cache
+  root = cache .. "/nvim/lazy/",
+  lockfile = cache .. "/nvim/lazy/lazy-lock.json",
+  pkg = { cache = cache .. "/nvim/lazy/pkg-cache.lua" },
+  readme = { root = cache .. "/nvim/lazy/readme" },
+  state = cache .. "/nvim/lazy/state.json",
+  rocks = { root = cache .. "/nvim/lazy/lazy-rocks" },
+
+  -- Lazy Setup
+  spec = { { import = "plugins" } },
+  defaults = { lazy = true, version = "*" },
+  install = { colorscheme = { "tokyonight" } },
+  checker = { enabled = false },
+  change_detection = { enabled = false, notify = false },
+  performance = { rtp = { disabled_plugins = plugins_to_disable } },
+  profiling = { enabled = true },
+})

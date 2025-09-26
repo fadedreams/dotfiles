@@ -46,6 +46,19 @@ vim.opt.updatetime = 50
 -- avante views can only be fully collapsed with the global statusline
 vim.opt.laststatus = 3
 
+  -- Use Enter in normal mode to add a new line
+vim.keymap.set("n", "<cr>", "o<esc>", { noremap = true, silent = true })
+
+
+vim.keymap.set("n", "<cr>", "o<esc>", { noremap = true, silent = true })
+
+
+vim.keymap.set("n", "<leader>tl", function()
+  vim.opt.list = not vim.opt.list:get()
+end, { desc = "[T]oggle [L]ist" })
+ -- { "n", "<leader>sf", [[<cmd>silent! %s/\r//g | silent! %s/\s\+$//g<cr>]], "[S]pace [F]ormat" },
+vim.keymap.set("n", "<leader>ff", [[<cmd>silent! %s/\r//g | silent! %s/\s\+$//g<cr>]], { desc = "[S]pace [F]ormat" })
+
 --vim.opt.colorcolumn = "80"
 vim.opt.termguicolors = true
 vim.api.nvim_set_hl(0, "CustomYank", { bg = "#7398e8" })
@@ -126,7 +139,7 @@ vim.keymap.set("n", "<leader>ba", ":%bd<CR>", { noremap = true, silent = true, d
 vim.keymap.set("n", "<c-h>", ":bdelete<CR>")
 vim.keymap.set("n", "<c-k>", ":bnext<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<c-j>", ":bprevious<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<c-l>", "<cmd>b#<cr>", { noremap = true, silent = true }) --Move to last buffer
+vim.keymap.set("n", "<c-g>", "<cmd>b#<cr>", { noremap = true, silent = true }) --Move to last buffer
 
 -- Disable Ctrl+K in insert mode
 -- vim.api.nvim_set_keymap("i", "<C-k>", "<Nop>", { noremap = true, silent = true })
