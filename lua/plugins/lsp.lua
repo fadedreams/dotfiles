@@ -1,200 +1,199 @@
+--  https://github.com/abhilash26/zenedit/blob/main/lua/zenedit/plugins/lsp.lua
 return {
 	{
 		"neovim/nvim-lspconfig",
+		event = { "BufReadPost", "BufNewFile" },
 		dependencies = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-			"hrsh7th/cmp-nvim-lsp", -- For LSP completion capabilities
+			{ "williamboman/mason.nvim", cmd = "Mason" },
+			{ "williamboman/mason-lspconfig.nvim" },
+			{
+				"WhoIsSethDaniel/mason-tool-installer.nvim",
+				cmd = {
+					"MasonToolsInstall",
+					"MasonToolsInstallSync",
+					"MasonToolsUpdate",
+					"MasonToolsUpdateSync",
+				},
+			},
+			{ "hrsh7th/cmp-nvim-lsp" },
 		},
-		event = { "BufReadPre", "BufNewFile" }, -- Lazy-load on buffer read or new file
-		config = function()
-			local cmp_nvim_lsp = require("cmp_nvim_lsp")
-			require("mason").setup()
-			require("mason-lspconfig").setup({
-				automatic_enable = true,
-			})
+		opts = function()
+			return {
+				servers = {
+					emmet_ls = { filetypes = { "html", "php", "svelte", "vue", "templ" } },
+					intelephense = { single_file_support = true },
+					lua_ls = {
+						settings = {
+							Lua = {
+								codelens = { enable = true },
+								completion = { callSnippet = "Replace" },
+								diagnostics = { globals = { "vim", "Snacks" } },
+								runtime = { version = "LuaJIT" },
+								telemetry = { enable = false },
+								workspace = { checkThirdParty = false },
+							},
+						},
+					},
+					tailwindcss = {
+						filetypes = { "react", "svelte", "vue", "html", "templ" },
+					},
+					tsserver = {
+						initializationOptions = {
+							preferences = { includeCompletionsForModuleExports = false },
+						},
+					},
+          cssls = {},
+          jsonls = {},
+          -- lua_ls = {},
+          pyright = {},
+          gopls = {},
+          rust_analyzer = {},
+				},
+				diagnostics = {
+					severity_sort = true,
+					underline = false,
+					update_in_insert = false,
+					virtual_text = { spacing = 4, source = "if_many", prefix = "●" },
+				},
+				diagnostic_icons = {
+					Error = " ",
+					Warn = " ",
+					Hint = " ",
+					Info = " ",
+				},
+				ensure_installed = {
+					-- LSP Servers
+					"pyright",
+					"rust_analyzer",
+					"gopls",
+					"vue_ls",
+					"bashls",
+					"clangd",
+					"cssls",
+					"css_variables",
+					"emmet_ls",
+					"html",
+					"htmx",
+					"intelephense",
+					"jsonls",
+					"lua_ls",
+					"marksman",
+					"pyright",
+					"svelte",
+					"tailwindcss",
+					"templ",
+					"ts_ls",
+					"vuels",
+					-- Linters
+					"eslint_d",
+					"phpcs",
+					"pylint",
+					"shellcheck",
+					-- Formatters
+					"black",
+					"gofumpt",
+					"isort",
+					"php-cs-fixer",
+					"prettierd",
+					"shfmt",
+					"sqlfmt",
+					"stylua",
+					"sql-formatter",
+				},
+			}
+		end,
+		config = function(_, opts)
+			local diag = vim.diagnostic
+			local kmap = vim.keymap.set
+			local fn = vim.fn
+			local api = vim.api
 
-			-- Define LSP server capabilities for nvim-cmp
-			local capabilities = cmp_nvim_lsp.default_capabilities()
-
-			-- Function to set LSP keymaps
-			local function set_lsp_keymaps(client, bufnr)
-				-- Helper function to create keymaps
-				local function map(mode, lhs, rhs, desc)
-					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
-				end
-
-				-- Keymaps for LSP actions
-				map("n", "gd", vim.lsp.buf.definition, "Go to definition")
-				map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-				map("n", "gr", vim.lsp.buf.references, "Find references")
-				map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
-				map("n", "K", vim.lsp.buf.hover, "Show hover documentation")
-				map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
-				map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
-				map("n", "<leader>ds", vim.lsp.buf.document_symbol, "Document symbols")
-				map("n", "<leader>ws", vim.lsp.buf.workspace_symbol, "Workspace symbols")
-				map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
-				map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
-				map("n", "<leader>e", vim.diagnostic.open_float, "Show diagnostic in float")
-				map("n", "<leader>q", vim.diagnostic.setloclist, "Diagnostics to location list")
-
-				-- Optional: Format on save (uncomment if desired)
-				-- if client.server_capabilities.documentFormattingProvider then
-				--   vim.api.nvim_create_autocmd("BufWritePre", {
-				--     buffer = bufnr,
-				--     callback = function() vim.lsp.buf.format({ async = false }) end,
-				--     desc = "Format on save",
-				--   })
-				-- end
+			-- Set diagnostic icons once
+			for key, icon in pairs(opts.diagnostic_icons) do
+				fn.sign_define(key, { text = icon, texthl = "DiagnosticSign" .. key })
 			end
 
-			-- List of servers to configure
-			local servers = {
-				html = {},
-				tailwindcss = {},
-				tsserver = {}, -- TypeScript/JavaScript
-				cssls = {},
-				jsonls = {},
-				lua_ls = {},
-				pyright = {},
-				gopls = {},
-				rust_analyzer = {},
-			}
+			-- Pre-cache diagnostics configuration
+			diag.config(opts.diagnostics)
 
-			-- Configure each LSP server using vim.lsp.config
-			for server, config in pairs(servers) do
-				vim.lsp.config(server, {
-					capabilities = capabilities,
-					settings = server == "lua_ls"
-							and {
-								Lua = {
-									diagnostics = {
-										globals = { "vim" }, -- Recognize 'vim' global for Neovim
-									},
-									workspace = {
-										library = vim.api.nvim_get_runtime_file("", true), -- Include Neovim runtime files
-									},
-								},
-							}
-						or {},
-					on_attach = set_lsp_keymaps, -- Attach keymaps when LSP client connects
+			-- Diagnostic key mappings
+			kmap("n", "[d", diag.goto_prev, { desc = "Go to previous diagnostic" })
+			kmap("n", "]d", diag.goto_next, { desc = "Go to next diagnostic" })
+			kmap("n", "<leader>de", diag.open_float, { desc = "Show diagnostic error" })
+			kmap("n", "<leader>dq", diag.setloclist, { desc = "Show diagnostic quickfix" })
+
+			-- LSP attach event
+			api.nvim_create_autocmd("LspAttach", {
+				desc = "LSP actions",
+				group = api.nvim_create_augroup("zenedit_lsp_attach", { clear = true }),
+				callback = function(event)
+					local lsp = vim.lsp
+					local client = lsp.get_client_by_id(event.data.client_id)
+					if not client then
+						return
+					end
+
+					local buf = event.buf
+					local map = vim.keymap.set
+
+					local bmap = function(lhs, rhs, desc)
+						map("n", lhs, rhs, { desc = desc, buffer = buf })
+					end
+
+					-- Core LSP mappings
+					bmap("K", lsp.buf.hover, "Hover documentation")
+					bmap("<F2>", lsp.buf.rename, "Rename")
+
+					-- Optional: Fzf-Lua integration
+					local has_fzf, fzf = pcall(require, "fzf-lua")
+					if has_fzf then
+						bmap("gd", fzf.lsp_definitions, "Go to definition")
+						bmap("gD", fzf.lsp_declarations, "Go to declaration")
+						bmap("gi", fzf.lsp_implementations, "Go to implementation")
+						bmap("gt", fzf.lsp_typedefs, "Go to type definition")
+						bmap("gr", fzf.lsp_references, "Go to references")
+						bmap("<leader>ds", fzf.lsp_document_symbols, "Document symbols")
+						bmap("<leader>ws", fzf.lsp_workspace_symbols, "Workspace symbols")
+						bmap("<leader>ca", fzf.lsp_code_actions, "Code actions")
+					end
+				end,
+			})
+
+			-- Mason setup
+			local has_mason, mason = pcall(require, "mason")
+			if has_mason then
+				mason.setup({ install_root_dir = fn.stdpath("cache") .. "/mason" })
+			end
+
+			-- Mason tool installer
+			local has_installer, installer = pcall(require, "mason-tool-installer")
+			if has_installer then
+				installer.setup({ ensure_installed = opts.ensure_installed })
+			end
+
+			-- LSP capabilities and setup
+			local has_cmp, cmp = pcall(require, "cmp_nvim_lsp")
+
+			local capabilities = vim.tbl_deep_extend(
+				"force",
+				vim.lsp.protocol.make_client_capabilities(),
+				has_cmp and cmp.default_capabilities() or {}
+			)
+
+			local has_mason_lsp, mason_lspconfig = pcall(require, "mason-lspconfig")
+			local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+			if has_mason_lsp and has_lspconfig then
+				mason_lspconfig.setup({
+					handlers = {
+						function(s)
+							local server_opts = opts.servers[s] or {}
+							server_opts.capabilities =
+								vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
+							lspconfig[s].setup(server_opts)
+						end,
+					},
 				})
 			end
-		end,
-	},
-  {
-    "mason-org/mason.nvim",
-    opts = {}
-  },
-	{
-		"mason-org/mason-lspconfig.nvim",
-		dependencies = {
-			"neovim/nvim-lspconfig",
-			"mason-org/mason.nvim",
-		},
-		opts = {
-			ensure_installed = {
-				-- "stylua",
-				-- "selene",
-				-- "luacheck",
-				-- "shellcheck",
-				-- "shfmt",
-        -- "tsserver",
-				-- "typescript-language-server",
-				"ts_ls",
-				-- "css-lsp",
-				-- "html-lsp",
-				-- "emmet-ls",
-				"pyright",
-				"rust_analyzer",
-				"gopls",
-				-- "vue-language-server",
-				"vue_ls",
-				-- "json-lsp",
-				-- "lua-language-server",
-				-- "yaml-language-server",
-			},
-		},
-	},
-	-- nvim-cmp: Autocompletion plugin
-	{
-		"hrsh7th/nvim-cmp",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp", -- LSP completion source
-			"hrsh7th/cmp-buffer", -- Buffer completion source
-			"hrsh7th/cmp-path", -- Path completion source
-			"hrsh7th/cmp-cmdline", -- Cmdline completion source
-			"hrsh7th/cmp-vsnip", -- Snippet completion source
-			"hrsh7th/vim-vsnip", -- Snippet engine
-		},
-		event = { "InsertEnter", "CmdlineEnter" }, -- Lazy-load on entering insert or cmdline mode
-		config = function()
-			local cmp = require("cmp")
-
-			cmp.setup({
-				snippet = {
-					expand = function(args)
-						vim.fn["vsnip#anonymous"](args.body) -- Use vim-vsnip for snippet expansion
-					end,
-				},
-				window = {
-					completion = cmp.config.window.bordered(), -- Bordered completion menu
-					documentation = cmp.config.window.bordered(), -- Bordered documentation window
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-b>"] = cmp.mapping.scroll_docs(-4), -- Scroll documentation up
-					["<C-f>"] = cmp.mapping.scroll_docs(4), -- Scroll documentation down
-					["<C-Space>"] = cmp.mapping.complete(), -- Trigger completion
-					["<C-e>"] = cmp.mapping.abort(), -- Abort completion
-					["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm selection
-					["<Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_next_item()
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-					["<S-Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_prev_item()
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-				}),
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp", priority = 1000 }, -- LSP completions
-					{ name = "vsnip", priority = 750 }, -- Snippet completions
-					{ name = "buffer", priority = 500 }, -- Buffer completions
-					{ name = "path", priority = 250 }, -- Path completions
-				}),
-			})
-
-			-- Configure completion for specific filetypes (e.g., gitcommit)
-			cmp.setup.filetype("gitcommit", {
-				sources = cmp.config.sources({
-					{ name = "buffer" },
-				}),
-			})
-
-			-- Configure completion for cmdline ("/" and "?")
-			-- cmp.setup.cmdline({ "/", "?" }, {
-			--   mapping = cmp.mapping.preset.cmdline(),
-			--   sources = {
-			--     { name = "buffer" },
-			--   },
-			-- })
-
-			-- Configure completion for cmdline (":")
-			-- cmp.setup.cmdline(":", {
-			--   mapping = cmp.mapping.preset.cmdline(),
-			--   sources = cmp.config.sources({
-			--     { name = "path" },
-			--     { name = "cmdline" },
-			--   }),
-			--   matching = { disallow_symbol_nonprefix_matching = false },
-			-- })
 		end,
 	},
 }

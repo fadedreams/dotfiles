@@ -2,7 +2,7 @@
 return {
   "mikavilpas/yazi.nvim",
   dependencies = { "nvim-telescope/telescope.nvim" },  -- Optional for fuzzy finding
-  keys = { { "<leader>c", "<cmd>Yazi<cr>", desc = "Open Yazi" } },
+  keys = { { "<leader>i", "<cmd>Yazi<cr>", desc = "Open Yazi" } },
   ---@type YaziConfig | {}
   opts = {
     floating_window_scaling_factor = 1.0,  -- Set to 1.0 for fullscreen
