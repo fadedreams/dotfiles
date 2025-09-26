@@ -17,7 +17,6 @@
 --
 -- }'
 return {
-  {
     "madox2/vim-ai",
     config = function()
       -- Configure vim-ai to use OpenRouter with DeepSeek
@@ -131,5 +130,4 @@ return {
       --   }
       -- )
     end,
-  },
 }

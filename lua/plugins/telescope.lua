@@ -48,7 +48,7 @@ return {
         desc = "Find Functions (LSP)",
       },
       {
-        "<leader>td",
+        "<leader>ft",
         "<cmd>TodoTelescope layout_config={height=0.9,width=0.9}<cr>",
         noremap = true,
         silent = true,

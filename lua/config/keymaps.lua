@@ -91,11 +91,12 @@ vim.keymap.set(
 	":silent !xdg-open %:p:h<CR>",
 	{ noremap = true, silent = true, desc = "Open file explorer" }
 )
+
 vim.keymap.set("n", "<F11>", ":only<CR>", { noremap = true, silent = true, desc = "Maximize window" })
-vim.keymap.set("n", "<C-w><left>", "<C-w><")
-vim.keymap.set("n", "<C-w><right>", "<C-w>>")
-vim.keymap.set("n", "<C-w><up>", "<C-w>+")
-vim.keymap.set("n", "<C-w><down>", "<C-w>-")
+-- vim.keymap.set("n", "<c-w><left>", "<C-w><")
+-- vim.keymap.set("n", "<c-w><right>", "<C-w>>")
+-- vim.keymap.set("n", "<c-w><up>", "<C-w>+")
+-- vim.keymap.set("n", "<c-w><down>", "<C-w>-")
 
 --default browser
 -- vim.keymap.set("n", "<F3>", ":Ex<CR>")
@@ -362,9 +363,6 @@ vim.keymap.set("x", "p", "pgvy")
 -- del backward
 -- vim.keymap.set("n", "dw", 'vb"_d')
 
--- Splitkeymap <leader>wv ws
--- vim.keymap.set("n", "<a-h>", ":split<Return><C-w>w")
--- vim.keymap.set("n", "<a-5>", ":vsplit<Return><C-w>w")
 
 --delete buffer
 --vim.keymap.set('n', 'fv', ':bdelete')

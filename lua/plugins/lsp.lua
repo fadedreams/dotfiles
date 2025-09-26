@@ -1,48 +1,4 @@
 return {
-	-- Mason: Package manager for LSP servers, formatters, and linters
-	{
-		"mason-org/mason.nvim",
-		opts = {
-			ensure_installed = {
-				"stylua",
-				"selene",
-				-- "luacheck",
-				"shellcheck",
-				"shfmt",
-				"typescript-language-server",
-				"css-lsp",
-				-- "html-lsp",
-				"emmet-ls",
-				"pyright",
-				"rust-analyzer",
-				"gopls",
-				"vue-language-server",
-				-- "json-lsp",
-				-- "lua-language-server",
-				-- "yaml-language-server",
-			},
-			-- ui = {
-			--   border = "rounded", -- Customize Mason UI
-			--   icons = {
-			--     package_installed = "✓",
-			--     package_pending = "➜",
-			--     package_uninstalled = "✗",
-			--   },
-			-- },
-		},
-		config = function(_, opts)
-			require("mason").setup(opts)
-		end,
-	},
-	-- Mason-LSPConfig: Bridge between mason.nvim and nvim-lspconfig
-	{
-		"mason-org/mason-lspconfig.nvim",
-		dependencies = { "williamboman/mason.nvim" },
-		config = function()
-			require("mason-lspconfig").setup({})
-		end,
-	},
-	-- nvim-lspconfig: LSP configurations
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
@@ -53,6 +9,10 @@ return {
 		event = { "BufReadPre", "BufNewFile" }, -- Lazy-load on buffer read or new file
 		config = function()
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
+			require("mason").setup()
+			require("mason-lspconfig").setup({
+				automatic_enable = true,
+			})
 
 			-- Define LSP server capabilities for nvim-cmp
 			local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -122,6 +82,40 @@ return {
 				})
 			end
 		end,
+	},
+  {
+    "mason-org/mason.nvim",
+    opts = {}
+  },
+	{
+		"mason-org/mason-lspconfig.nvim",
+		dependencies = {
+			"neovim/nvim-lspconfig",
+			"mason-org/mason.nvim",
+		},
+		opts = {
+			ensure_installed = {
+				-- "stylua",
+				-- "selene",
+				-- "luacheck",
+				-- "shellcheck",
+				-- "shfmt",
+        -- "tsserver",
+				-- "typescript-language-server",
+				"ts_ls",
+				-- "css-lsp",
+				-- "html-lsp",
+				-- "emmet-ls",
+				"pyright",
+				"rust_analyzer",
+				"gopls",
+				-- "vue-language-server",
+				"vue_ls",
+				-- "json-lsp",
+				-- "lua-language-server",
+				-- "yaml-language-server",
+			},
+		},
 	},
 	-- nvim-cmp: Autocompletion plugin
 	{
