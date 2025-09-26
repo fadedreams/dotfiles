@@ -141,19 +141,19 @@ vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { noremap = true, silent = true
 -- vim.keymap.set("n", "<c-l>", ":bprevious<CR>", { noremap = true, silent = true })
 
 -- Save current session to ./session.vim
-vim.keymap.set("n", "<leader>ss", ":mksession! ./session.vim<CR>", {
-	noremap = true,
-	silent = true,
-	desc = "Save session to file", -- Shows in which-key
-})
+-- vim.keymap.set("n", "<leader>ss", ":mksession! ./session.vim<CR>", {
+-- 	noremap = true,
+-- 	silent = true,
+-- 	desc = "Save session to file", -- Shows in which-key
+-- })
 -- Load session from the current working directory
-vim.keymap.set("n", "<leader>ls", ":source ./session.vim<CR>", { noremap = true, silent = true })
--- delete swap files
-local function delete_swap_files()
-	local cmd = "rm -rf ~/.local/state/nvim/swap/*"
-	vim.fn.system(cmd)
-	print("Swap files deleted.")
-end
+-- vim.keymap.set("n", "<leader>ls", ":source ./session.vim<CR>", { noremap = true, silent = true })
+-- -- delete swap files
+-- local function delete_swap_files()
+-- 	local cmd = "rm -rf ~/.local/state/nvim/swap/*"
+-- 	vim.fn.system(cmd)
+-- 	print("Swap files deleted.")
+-- end
 -- Map leader + ds to delete swap files function
 -- Uses normal mode (n), is non-recursive (noremap), and silent
 vim.keymap.set("n", "<leader>ds", delete_swap_files, {

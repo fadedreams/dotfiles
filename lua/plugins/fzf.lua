@@ -1,3 +1,4 @@
+-- read https://github.com/abhilash26/zenedit/blob/main/lua/zenedit/plugins/navigation.lua
 return {
   "ibhagwan/fzf-lua",
   -- optional for icon support
@@ -30,6 +31,21 @@ return {
   keys = {
     -- Disable the keymap to grep files
     { "<leader>ss", false },
+			{ "<c-p>", "<cmd>FzfLua files cwd=%:p:h<cr>", desc = "Find files (cwd)" },
+			{ "<leader>ff", "<cmd>FzfLua files cwd=%:p:h<cr>", desc = "Find files (cwd)" },
+			{ "<leader>fc", "<cmd>FzfLua files cwd=~/.config/nvim<cr>", desc = "Find nvim config" },
+			{ "<leader>fg", "<cmd>FzfLua grep cwd=%:p:h<cr>", desc = "Find in files (cwd)" },
+			{ "<leader>fh", "<cmd>FzfLua help_tags<cr>", desc = "Help pages" },
+			{ "<leader>fm", "<cmd>FzfLua man_pages<cr>", desc = "Man pages" },
+			{ "<leader>fo", "<cmd>FzfLua oldfiles<cr>", desc = "Recent files" },
+			{ "<leader>ft", "<cmd>FzfLua colorschemes<cr>", desc = "Find colorschemes" },
+			{ "<leader>fk", "<cmd>FzfLua keymaps<cr>", desc = "Find keymaps" },
+			{ "<leader>fq", "<cmd>FzfLua quickfix<cr>", desc = "Find quickfix" },
+			{ "<leader>gs", "<cmd>FzfLua git_status<cr>", desc = "Find git status" },
+			{ "<leader>gc", "<cmd>FzfLua git_commits<cr>", desc = "Find git commits" },
+			{ "<leader>gb", "<cmd>FzfLua git_branches<cr>", desc = "Find git branches" },
+			{ "<leader>fb", "<cmd>FzfLua buffers<cr>", desc = "Find recent buffers" },
+			{ "<leader>:", "<cmd>FzfLua command_history<cr>", desc = "Find command history" },
     -- {
     --   "<leader>fs",
     --   function()
