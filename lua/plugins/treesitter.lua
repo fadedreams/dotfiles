@@ -1,9 +1,15 @@
+-- https://github.com/abhilash26/zenedit/blob/main/lua/zenedit/plugins/syntax.lua
 return {
-  "nvim-treesitter/nvim-treesitter", 
-  build = ":TSUpdate",
-  config = function()
-    local config = require("nvim-treesitter.configs")
-    config.setup({
+  {
+    "nvim-treesitter/nvim-treesitter",
+    version = false,
+    build = ":TSUpdate",
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "TSInstall", "TSUpdate", "TSUpdateSync" },
+    opts = {
+      auto_install = true,
+      highlight = { enable = true, additional_vim_regex_highlighting = false },
+      indent = { enable = true },
       ensure_installed = {
         "bash",
         "cpp",
@@ -55,12 +61,10 @@ return {
         "dockerfile",
         "xml",
       },
-      sync_install = false,
-      auto_install = true,
-      highlight = { enable = true },
-      indent = { enable = true }    
-    })
-    -- This binds the leader key followed by i in visual mode to automatically indent the selected code.
-    -- vim.api.nvim_set_keymap('v', '<leader>i', ':normal! =<CR>', { noremap = true, silent = true })
-  end
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.install").prefer_git = true
+      require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
 }
