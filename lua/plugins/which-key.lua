@@ -5,7 +5,7 @@ return {
     win = {
       no_overlap = true, -- Avoid overlapping cursor
       col = -1, -- Anchor to the right edge (negative value to align with the rightmost column)
-      row = 0, -- Anchor to top edge
+      -- row = 0, -- Anchor to top edge
       padding = { 0, 0 }, -- Top/bottom, right/left padding
       title = true, -- Show title
       title_pos = "center", -- Center the title

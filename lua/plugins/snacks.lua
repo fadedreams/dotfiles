@@ -27,7 +27,7 @@ return
           Snacks.toggle.diagnostics():map("<leader>td")
           Snacks.toggle.line_number():map("<leader>tl")
           Snacks.toggle.treesitter():map("<leader>tt")
-          Snacks.toggle.inlay_hints():map("<leader>th")
+          -- Snacks.toggle.inlay_hints():map("<leader>th")
           Snacks.toggle.indent():map("<leader>ti")
           Snacks.toggle.zen():map("<leader>tz")
           -- Snacks.toggle.option("list", { name = "Show Whitespace" }):map("<leader>tws")
@@ -41,10 +41,9 @@ return
     keys = {
       -- { "<leader>z", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
       -- { "<leader>\\", function() Snacks.terminal() end, desc = "Toggle terminal" },
+      { "<leader>bf", function() Snacks.format() end, desc = "Format buffer" },
       { "<leader>uh", function() Snacks.notifier.show_history() end, desc = "Notification history" },
-      { "<leader>ui", function() Snacks.notifier.hide() end, desc = "Dismiss all notifications" },
-      { "<leader>ss", function() Snacks.session.save() end , desc = "Save session" },
-      { "<leader>sr", function() Snacks.session.restore() end, desc = "Restore session" },
+      { "<leader>ud", function() Snacks.notifier.hide() end, desc = "Dismiss all notifications" },
       -- { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
       -- { "<leader>bq", function() Snacks.bufdelete() end, desc = "Buffer quit" },
       -- { "<leader>bd", function() Snacks.bufdelete() end, desc = "Buffer delete" },
@@ -52,13 +51,13 @@ return
       -- { "<c-q>", function() Snacks.bufdelete() end, desc = "Buffer quit" },
     },
     opts = {
-      indent = { enabled = true },
+      -- indent = { enabled = true },
       input = { enabled = true },
       notifier = { enabled = true, timeout = 3000 },
       scope = { enabled = true },
       bigfile = { enabled = true },
       quickfile = { enabled = true },
-      statuscolumn = { enabled = true },
-      lazygit = { enabled = true, configure = true },
+      -- statuscolumn = { enabled = true },
+      -- lazygit = { enabled = true, configure = true },
     },
   }

@@ -57,7 +57,7 @@ vim.keymap.set("n", "<leader>tl", function()
   vim.opt.list = not vim.opt.list:get()
 end, { desc = "[T]oggle [L]ist" })
  -- { "n", "<leader>sf", [[<cmd>silent! %s/\r//g | silent! %s/\s\+$//g<cr>]], "[S]pace [F]ormat" },
-vim.keymap.set("n", "<leader>ff", [[<cmd>silent! %s/\r//g | silent! %s/\s\+$//g<cr>]], { desc = "[S]pace [F]ormat" })
+-- vim.keymap.set("n", "<leader>ff", [[<cmd>silent! %s/\r//g | silent! %s/\s\+$//g<cr>]], { desc = "[S]pace [F]ormat" })
 
 --vim.opt.colorcolumn = "80"
 vim.opt.termguicolors = true
@@ -117,11 +117,11 @@ vim.keymap.set("n", "<F11>", ":only<CR>", { noremap = true, silent = true, desc 
 -- vim.keymap.set("n", "<F5>", ":checktime<CR>", { noremap = true })
 
 --save
-vim.keymap.set("n", "<a-s>", ":w<CR>", { noremap = true })
-vim.keymap.set("i", "<a-s>", "<Esc>:w<CR>", { noremap = true })
+vim.keymap.set("n", "<a-w>", ":w<CR>", { noremap = true })
+vim.keymap.set("i", "<a-w>", "<Esc>:w<CR>", { noremap = true })
 -- save all
-vim.keymap.set("n", "<c-s>", ":wa<CR>", { noremap = true, silent = true })
-vim.keymap.set("i", "<c-s>", "<Esc>:wa<CR>i", { noremap = true, silent = true })
+vim.keymap.set("n", "<a-s>", ":wa<CR>", { noremap = true, silent = true })
+vim.keymap.set("i", "<a-s>", "<Esc>:wa<CR>i", { noremap = true, silent = true })
 
 --quit
 vim.keymap.set("n", "<a-q>", ":q<CR>", { noremap = true })
@@ -161,7 +161,7 @@ vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { noremap = true, silent = true
 -- 	desc = "Save session to file", -- Shows in which-key
 -- })
 -- Load session from the current working directory
--- vim.keymap.set("n", "<leader>ls", ":source ./session.vim<CR>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<leader>sl", ":source ./session.vim<CR>", { noremap = true, silent = true })
 -- delete swap files
 local function delete_swap_files()
 	local cmd = "rm -rf ~/.local/state/nvim/swap/*"
