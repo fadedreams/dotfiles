@@ -80,6 +80,8 @@ local exclude_opts_fd = build_exclude_opts(exclude_list, "fd")
 --     })
 -- end, { noremap = true, silent = true, desc = "Find files" })
 
+vim.keymap.set("n", "<leader>ft", ":TodoFzfLua<CR>",  { noremap = true, silent = true, desc = "Find Todo"})
+
 vim.keymap.set("n", "<leader><leader>", function()
 	local exclude_opts = build_exclude_opts(exclude_list, "fd")
 	-- print("exclude_opts: " .. exclude_opts)

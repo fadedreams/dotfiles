@@ -204,4 +204,83 @@ return {
       end
     end,
   },
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp", -- LSP completion source
+			"hrsh7th/cmp-buffer", -- Buffer completion source
+			"hrsh7th/cmp-path", -- Path completion source
+			"hrsh7th/cmp-cmdline", -- Cmdline completion source
+			"hrsh7th/cmp-vsnip", -- Snippet completion source
+			"hrsh7th/vim-vsnip", -- Snippet engine
+		},
+		event = { "InsertEnter", "CmdlineEnter" }, -- Lazy-load on entering insert or cmdline mode
+		config = function()
+			local cmp = require("cmp")
+
+			cmp.setup({
+				snippet = {
+					expand = function(args)
+						vim.fn["vsnip#anonymous"](args.body) -- Use vim-vsnip for snippet expansion
+					end,
+				},
+				window = {
+					completion = cmp.config.window.bordered(), -- Bordered completion menu
+					documentation = cmp.config.window.bordered(), -- Bordered documentation window
+				},
+				mapping = cmp.mapping.preset.insert({
+					["<C-b>"] = cmp.mapping.scroll_docs(-4), -- Scroll documentation up
+					["<C-f>"] = cmp.mapping.scroll_docs(4), -- Scroll documentation down
+					["<C-Space>"] = cmp.mapping.complete(), -- Trigger completion
+					["<C-e>"] = cmp.mapping.abort(), -- Abort completion
+					["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm selection
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_next_item()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+					["<S-Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_prev_item()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+				}),
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp", priority = 1000 }, -- LSP completions
+					{ name = "vsnip", priority = 750 }, -- Snippet completions
+					{ name = "buffer", priority = 500 }, -- Buffer completions
+					{ name = "path", priority = 250 }, -- Path completions
+				}),
+			})
+
+			-- Configure completion for specific filetypes (e.g., gitcommit)
+			cmp.setup.filetype("gitcommit", {
+				sources = cmp.config.sources({
+					{ name = "buffer" },
+				}),
+			})
+
+			-- Configure completion for cmdline ("/" and "?")
+			-- cmp.setup.cmdline({ "/", "?" }, {
+			--   mapping = cmp.mapping.preset.cmdline(),
+			--   sources = {
+			--     { name = "buffer" },
+			--   },
+			-- })
+
+			-- Configure completion for cmdline (":")
+			-- cmp.setup.cmdline(":", {
+			--   mapping = cmp.mapping.preset.cmdline(),
+			--   sources = cmp.config.sources({
+			--     { name = "path" },
+			--     { name = "cmdline" },
+			--   }),
+			--   matching = { disallow_symbol_nonprefix_matching = false },
+			-- })
+		end,
+	},
 }

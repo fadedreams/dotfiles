@@ -26,7 +26,7 @@ return
             :map("<leader>tr")
           Snacks.toggle.diagnostics():map("<leader>td")
           Snacks.toggle.line_number():map("<leader>tl")
-          Snacks.toggle.treesitter():map("<leader>tt")
+          -- Snacks.toggle.treesitter():map("<leader>tt")
           -- Snacks.toggle.inlay_hints():map("<leader>th")
           Snacks.toggle.indent():map("<leader>ti")
           Snacks.toggle.zen():map("<leader>tz")
@@ -41,9 +41,10 @@ return
     keys = {
       -- { "<leader>z", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
       -- { "<leader>\\", function() Snacks.terminal() end, desc = "Toggle terminal" },
-      { "<leader>bf", function() Snacks.format() end, desc = "Format buffer" },
+      -- { "<leader>bf", function() Snacks.format() end, desc = "Format buffer" },
       { "<leader>uh", function() Snacks.notifier.show_history() end, desc = "Notification history" },
       { "<leader>ud", function() Snacks.notifier.hide() end, desc = "Dismiss all notifications" },
+      { "<leader>bt", function() Snacks.scratch() end, desc = "New Scratch" },
       -- { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
       -- { "<leader>bq", function() Snacks.bufdelete() end, desc = "Buffer quit" },
       -- { "<leader>bd", function() Snacks.bufdelete() end, desc = "Buffer delete" },
@@ -57,6 +58,7 @@ return
       scope = { enabled = true },
       bigfile = { enabled = true },
       quickfile = { enabled = true },
+      scratch = { enabled = true, ft = "markdown" },
       -- statuscolumn = { enabled = true },
       -- lazygit = { enabled = true, configure = true },
     },

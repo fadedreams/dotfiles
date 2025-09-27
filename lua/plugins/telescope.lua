@@ -47,18 +47,13 @@ return {
         silent = true,
         desc = "Find Functions (LSP)",
       },
-      {
-        "<leader>ft",
-        "<cmd>TodoTelescope layout_config={height=0.9,width=0.9}<cr>",
-        noremap = true,
-        silent = true,
-        desc = "TODO",
-      },
+      -- {
+      --   "<leader>ft",
+      --   "<cmd>TodoTelescope layout_config={height=0.9,width=0.9}<cr>",
+      --   noremap = true,
+      --   silent = true,
+      --   desc = "TODO",
+      -- },
     },
-  },
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {}, -- Minimal setup for todo-comments
   },
 }
