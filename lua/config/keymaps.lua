@@ -134,12 +134,12 @@ vim.keymap.set("i", "<a-q>", "<Esc>:q<CR>", { noremap = true })
 
 --delete buffer
 vim.keymap.set("n", "<Leader>bb", "<C-^>", { noremap = true, silent = true, desc = "Toggle last buffer" })
-vim.keymap.set("n", "<leader>bo", ":%bd|e#|bd#<CR>", { noremap = true, silent = true, desc = "delete other buffers" })
-vim.keymap.set("n", "<leader>ba", ":%bd<CR>", { noremap = true, silent = true, desc = "delete all buffers" })
+vim.keymap.set("n", "<leader>bdo", ":%bd|e#|bd#<CR>", { noremap = true, silent = true, desc = "delete other buffers" })
+vim.keymap.set("n", "<leader>bda", ":%bd<CR>", { noremap = true, silent = true, desc = "delete all buffers" })
 vim.keymap.set("n", "<c-h>", ":bdelete<CR>")
 vim.keymap.set("n", "<c-k>", ":bnext<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<c-j>", ":bprevious<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<c-g>", "<cmd>b#<cr>", { noremap = true, silent = true }) --Move to last buffer
+vim.keymap.set("n", "<c-l>", "<cmd>b#<cr>", { noremap = true, silent = true }) --Move to last buffer
 
 -- Disable Ctrl+K in insert mode
 -- vim.api.nvim_set_keymap("i", "<C-k>", "<Nop>", { noremap = true, silent = true })
