@@ -2,33 +2,37 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 vim.opt.clipboard = "unnamedplus"
-vim.g.autoformat = false
 
 vim.opt.guicursor = "" -- Make Insert mode cursor a block (like Normal mode)
 
-vim.opt.nu = true
-vim.opt.relativenumber = true
 
+-- Editor
+vim.g.autoformat = false
+vim.opt.nu = true
+vim.opt.smartindent = true
+vim.opt.autoindent = true
+vim.opt.breakindent = true
+vim.opt.relativenumber = true
+vim.opt.number = true
+vim.opt.wrap = false
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
-vim.opt.smartindent = true
 
-vim.opt.wrap = false
 
 vim.o.cmdheight = 0 --sitck lualine to the bottom
 -- vim.o.laststatus = 3
 
 vim.opt.swapfile = false
 vim.opt.backup = false
--- Define the undo directory path
-local undo_dir = os.getenv("HOME") .. "/.vim/undodir"
--- Check if directory exists; if not, create it
-if vim.fn.isdirectory(undo_dir) == 0 then -- Returns 0 if dir doesn't exist
-	vim.fn.mkdir(undo_dir, "p") -- "p" flag creates parent dirs if needed
-end
+vim.opt.shadafile = vim.fn.stdpath("cache") .. "/nvim/shada/main.shada"
+vim.opt.swapfile = false
+vim.opt.undodir = vim.fn.stdpath("cache") .. "/nvim/undo"
+vim.opt.undofile = true
+
+
 -- Set undodir and enable persistent undo
 vim.opt.undodir = undo_dir
 vim.opt.undofile = true
@@ -61,6 +65,7 @@ end, { desc = "[T]oggle [L]ist" })
 
 --vim.opt.colorcolumn = "80"
 vim.opt.termguicolors = true
+vim.opt.cursorline = false
 vim.api.nvim_set_hl(0, "CustomYank", { bg = "#7398e8" })
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
@@ -70,12 +75,50 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		})
 	end,
 })
+vim.opt.background = "dark"
+vim.opt.signcolumn = "yes"
+
+-- Movement
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
+
+-- Coding
+vim.opt.fileencoding = "utf-8"
+vim.opt.foldmethod = "manual"
+
+-- Chars
+-- vim.opt.fillchars = { eob = " " }
+-- vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+-- vim.opt.list = true
+
+-- Splits
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
+-- Modes
+vim.opt.mouse = "a"
+-- Speed of operation
+-- vim.opt.timeoutlen = 300
+-- vim.opt.updatetime = 250
+
+-- Performance
+-- vim.opt.lazyredraw = true
+-- vim.schedule(function()
+--   vim.opt.clipboard = "unnamedplus"
+-- end)
 
 -- Swap lines
 vim.keymap.set("n", "<c-a-j>", ":m .+1<CR>==", { noremap = true, silent = true })
 vim.keymap.set("n", "<c-a-k>", ":m .-2<CR>==", { noremap = true, silent = true })
 vim.keymap.set("v", "<c-a-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 vim.keymap.set("v", "<c-a-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+
+-- statusline and bufferline
+-- vim.opt.conceallevel = 3
+-- vim.opt.laststatus = 2
+-- vim.opt.showmode = false
+-- vim.opt.showtabline = 1
+-- vim.opt.statusline = " 󰋑 %<%t %h%w%m%r %=  %f %= %y 󰋑 "
 
 -- vim.cmd("colorscheme tokyonight") -- should be placed in the init.lua
 
@@ -140,6 +183,9 @@ vim.keymap.set("n", "<c-h>", ":bdelete<CR>")
 vim.keymap.set("n", "<c-k>", ":bnext<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<c-j>", ":bprevious<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<c-l>", "<cmd>b#<cr>", { noremap = true, silent = true }) --Move to last buffer
+vim.keymap.set("n", "<leader>bn", "<cmd>ene <bar> startinsert <cr>", { noremap = true, silent = true, desc="[B]uffer [N]ew" })
+-- { "n", "<leader>fn", "<cmd>ene <bar> startinsert <cr>", "[B]uffer [N]ew" },
+-- vim.keymap.set("n", "<leader>bn", ":enew<CR>", { noremap = true, silent = true })
 
 -- Disable Ctrl+K in insert mode
 -- vim.api.nvim_set_keymap("i", "<C-k>", "<Nop>", { noremap = true, silent = true })
@@ -183,6 +229,11 @@ vim.keymap.set("n", "<leader>ds", delete_swap_files, {
 --   vim.api.nvim_command("/\\V\\<" .. vim.fn.escape(word, "\\") .. "\\>")
 -- end
 -- vim.api.nvim_set_keymap("n", "<leader>/", ":lua search_under_cursor()<CR>", { noremap = true, silent = true })
+
+-- Search
+vim.opt.ignorecase = true
+vim.opt.inccommand = "split"
+vim.opt.smartcase = true
 
 --leader search
 function search_under_cursor()
@@ -342,8 +393,6 @@ vim.keymap.set("i", "<a-z>", "<Left>", { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap("v", "$", "g_", { noremap = true, silent = true })
 
---new file
-vim.keymap.set("n", "<leader>fn", ":enew<CR>", { noremap = true, silent = true })
 
 -- relative number
 -- vim.keymap.set("n", "<leader>rn", ":set relativenumber!<CR>", { noremap = true, silent = true })
@@ -525,6 +574,7 @@ end
 
 -- Map the function to <leader>/ in visual mode
 vim.api.nvim_set_keymap("v", "<leader>/", ":lua visual_search()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>rh", ":nohlsearch<CR>", { noremap = true, silent = true, desc="Clear Highlight, V <leader>/" })
 
 --vim.keymap.set("n", "<leader>s", "g]")
 -- vim.keymap.set("n", "<leader>r", [[:%r/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])

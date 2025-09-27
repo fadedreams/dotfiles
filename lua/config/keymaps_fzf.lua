@@ -179,12 +179,12 @@ end, { noremap = true, silent = true, desc = "Search for Directories" })
 vim.keymap.set("n", "<leader>n", function()
 	-- local exclude_opts = build_exclude_opts(exclude_list, "rg")
 	fzf.live_grep({ rg_opts = "--hidden --no-ignore --ignore-case " .. combined_opts })
-end, { noremap = true, silent = true, desc = "Live grep (exclude multiple)" })
+end, { noremap = true, silent = true, desc = "Ignore case" })
 
 vim.keymap.set("n", "<leader>fn", function()
 	-- local exclude_opts = build_exclude_opts(exclude_list, "rg")
 	fzf.live_grep({ rg_opts = "--hidden --no-ignore " .. combined_opts })
-end, { noremap = true, silent = true, desc = "Live grep (exclude multiple)" })
+end, { noremap = true, silent = true, desc = "Case sensitive" })
 
 vim.keymap.set("n", "<leader>m", function()
 	-- local exclude_opts = build_exclude_opts(exclude_list, "rg")
@@ -230,10 +230,13 @@ vim.keymap.set("n", "<leader>fk", fzf.keymaps, { desc = "keymaps" }) -- Find key
 -- end, { desc = "Recent files" })
 
 -- vim.keymap.set("n", "<leader>gb", fzf.git_blame, { desc = "Git Blame" })
--- vim.keymap.set("n", "<leader>fg", fzf.git_files, { desc = "Git Files" })
-
--- vim.keymap.set("n", "<leader>gf", fzf.git_files, { desc = "Git Files" })
--- vim.keymap.set("n", "<leader>gs", fzf.git_status, { desc = "Git Status" })
+vim.keymap.set("n", "<leader>gf", fzf.git_files, { desc = "Git Files" })
+vim.keymap.set("n", "<leader>gs", fzf.git_status, { desc = "Git Status" })
+vim.keymap.set("n", "<leader>gb", fzf.git_branches, { desc = "Git Branches" })
+vim.keymap.set("n", "<leader>fo", fzf.oldfiles, { desc = "Old Files" })
+vim.keymap.set("n", "<leader>fb", fzf.buffers, { desc = "Find recent buffers" })
+vim.keymap.set("n", "<leader>fb", fzf.buffers, { desc = "Find recent buffers" })
+vim.keymap.set("n", "<leader>:", fzf.command_history, { desc = "Find command history" })
 
 -- vim.keymap.set("n", "<leader>fl", fzf.loclist, { desc = "Location List" })
 -- vim.keymap.set("n", "<leader>k", fzf.tabs, { desc = "Switch Between Tabs" })
@@ -267,7 +270,7 @@ vim.keymap.set("n", "<leader>f1", function()
 		search = word, -- Pre-fill the search with the word under cursor
 		rg_opts = "--line-number --hidden " .. combined_opts, -- Search text in hidden files
 		cwd = vim.loop.cwd(), -- Set current working directory
-		prompt = "Grep Text (hidden)> ", -- Updated prompt to reflect text search
+		prompt = "Case sensitive", -- Updated prompt to reflect text search
 	})
 end, { noremap = true, silent = true, desc = "Search text" })
 
@@ -278,7 +281,7 @@ vim.keymap.set("n", "<leader>1", function()
 		search = word, -- Pre-fill the search with the word under cursor
 		rg_opts = "--line-number --hidden --ignore-case " .. combined_opts, -- Search text in hidden files
 		cwd = vim.loop.cwd(), -- Set current working directory
-		prompt = "Grep Text (hidden)> ", -- Updated prompt to reflect text search
+		prompt = "Ignore case", -- Updated prompt to reflect text search
 	})
 end, { noremap = true, silent = true, desc = "Search text" })
 
