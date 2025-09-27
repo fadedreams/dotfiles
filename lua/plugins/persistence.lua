@@ -9,6 +9,7 @@ return {
           require("persistence").load({ last = true })
         end,
         "[S]ession [L]oad",
+        desc="Load session" 
       },
       {
         "<leader>sf",
@@ -16,6 +17,7 @@ return {
           require("persistence").select()
         end,
         "[S]ession [F]ind",
+        desc="Find session" 
       },
     },
     opts = {

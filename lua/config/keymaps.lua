@@ -117,11 +117,11 @@ vim.keymap.set("n", "<F11>", ":only<CR>", { noremap = true, silent = true, desc 
 -- vim.keymap.set("n", "<F5>", ":checktime<CR>", { noremap = true })
 
 --save
-vim.keymap.set("n", "<a-w>", ":w<CR>", { noremap = true })
-vim.keymap.set("i", "<a-w>", "<Esc>:w<CR>", { noremap = true })
+vim.keymap.set("n", "<a-s>", ":w<CR>", { noremap = true })
+vim.keymap.set("i", "<a-s>", "<Esc>:w<CR>", { noremap = true })
 -- save all
-vim.keymap.set("n", "<a-s>", ":wa<CR>", { noremap = true })
-vim.keymap.set("i", "<a-s>", "<Esc>:wa<CR>", { noremap = true })
+vim.keymap.set("n", "<c-s>", ":wa<CR>", { noremap = true, silent = true })
+vim.keymap.set("i", "<c-s>", "<Esc>:wa<CR>i", { noremap = true, silent = true })
 
 --quit
 vim.keymap.set("n", "<a-q>", ":q<CR>", { noremap = true })
@@ -346,7 +346,7 @@ vim.api.nvim_set_keymap("v", "$", "g_", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>fn", ":enew<CR>", { noremap = true, silent = true })
 
 -- relative number
-vim.keymap.set("n", "<leader>rn", ":set relativenumber!<CR>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<leader>rn", ":set relativenumber!<CR>", { noremap = true, silent = true })
 
 --quickfix
 -- vim.keymap.set("n", "<leader>qf", ":copen<CR>", { noremap = true, silent = true })

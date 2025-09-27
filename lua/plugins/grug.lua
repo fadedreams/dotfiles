@@ -12,9 +12,11 @@ return {
         windowCreationCommand = "botright vnew", -- Opens window on the right side
       })
       -- Set keybinding to open grug-far with <leader>sr
-      vim.keymap.set("n", "<leader>sr", function()
+      vim.keymap.set("n", "<leader>rr", function()
         require("grug-far").open()
-      end, { noremap = true, silent = true })
+      end, { noremap = true, silent = true , desc="Replace normal mode" 
+
+        })
     end,
   },
 }

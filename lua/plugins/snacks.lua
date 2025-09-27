@@ -25,20 +25,26 @@ return
             .option("relativenumber", { name = "Relative number" })
             :map("<leader>tr")
           Snacks.toggle.diagnostics():map("<leader>td")
-          -- Snacks.toggle.line_number():map("<leader>tl")
+          Snacks.toggle.line_number():map("<leader>tl")
           Snacks.toggle.treesitter():map("<leader>tt")
           Snacks.toggle.inlay_hints():map("<leader>th")
           Snacks.toggle.indent():map("<leader>ti")
           Snacks.toggle.zen():map("<leader>tz")
+          -- Snacks.toggle.option("list", { name = "Show Whitespace" }):map("<leader>tws")
+          -- Snacks.toggle.fold():map("<leader>tf")
+          -- Snacks.toggle.quickfix():map("<leader>tq")
+
         end,
       })
     end,
     --stylua: ignore
     keys = {
-      { "<leader>zz", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
+      -- { "<leader>z", function() Snacks.zen.zoom() end, desc = "Toggle zoom" },
       -- { "<leader>\\", function() Snacks.terminal() end, desc = "Toggle terminal" },
-      -- { "<leader>n", function() Snacks.notifier.show_history() end, desc = "Notification history" },
-      { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss all notifications" },
+      { "<leader>uh", function() Snacks.notifier.show_history() end, desc = "Notification history" },
+      { "<leader>ui", function() Snacks.notifier.hide() end, desc = "Dismiss all notifications" },
+      { "<leader>ss", function() Snacks.session.save() end , desc = "Save session" },
+      { "<leader>sr", function() Snacks.session.restore() end, desc = "Restore session" },
       -- { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
       -- { "<leader>bq", function() Snacks.bufdelete() end, desc = "Buffer quit" },
       -- { "<leader>bd", function() Snacks.bufdelete() end, desc = "Buffer delete" },
@@ -48,48 +54,11 @@ return
     opts = {
       indent = { enabled = true },
       input = { enabled = true },
-      notifier = { enabled = true, timeout = 2000 },
+      notifier = { enabled = true, timeout = 3000 },
       scope = { enabled = true },
       bigfile = { enabled = true },
       quickfile = { enabled = true },
       statuscolumn = { enabled = true },
       lazygit = { enabled = true, configure = true },
-      dashboard = {
-        preset = {
-          header = [[
-▀█▀ ██▀ █▄ █ ██▀ █▀▄ █ ▀█▀
-█▄▄ █▄▄ █ ▀█ █▄▄ █▄▀ █  █
-          ]],
-          --stylua: ignore
-          keys = {
-            {
-              icon = " ", key = "f", desc = "Find File",
-              action = ":lua Snacks.dashboard.pick('files')",
-            },
-            {
-              icon = " ", key = "n", desc = "New File",
-              action = ":ene | startinsert",
-            },
-            {
-              icon = " ", key = "g", desc = "Find Text",
-              action = ":lua Snacks.dashboard.pick('live_grep')",
-            },
-            {
-              icon = " ", key = "r", desc = "Recent Files",
-              action = ":lua Snacks.dashboard.pick('oldfiles')",
-            },
-            {
-              icon = " ", key = "c", desc = "Config",
-              action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
-            },
-            {
-              icon = " ", key = "s", desc = "Restore Session",
-              action = ":lua require('persistence').select()",
-            },
-            { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
-            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
-          },
-        },
-      },
     },
   }
